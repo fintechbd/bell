@@ -1,12 +1,7 @@
 <?php
 
 // config for Fintech/Bell
-use Fintech\Bell\Drivers\Push\FirebasePush;
-use Fintech\Bell\Drivers\Sms\ClickSend;
-use Fintech\Bell\Drivers\Sms\Infobip;
-use Fintech\Bell\Drivers\Sms\MessageBird;
-use Fintech\Bell\Drivers\Sms\Telnyx;
-use Fintech\Bell\Drivers\Sms\Twilio;
+use Fintech\Bell\Drivers\FirebasePush;
 use Fintech\Bell\Models\NotificationTemplate;
 use Fintech\Bell\Models\Trigger;
 use Fintech\Bell\Models\TriggerAction;
@@ -51,84 +46,6 @@ return [
     |
     | Note: while adding prefix add closing ending slash '/'
     */
-    'sms' => [
-        'mode' => 'sandbox',
-        'default' => 'infobip',
-        'clicksend' => [
-            'driver' => ClickSend::class,
-            'live' => [
-                'url' => 'https://rest.clicksend.com/v3/sms/send',
-                'username' => null,
-                'password' => null,
-                'from' => null,
-            ],
-            'sandbox' => [
-                'url' => 'https://rest.clicksend.com/v3/sms/send',
-                'username' => 'masud@clavisint.com',
-                //                                'password' => 'Masudalam@13119214',
-                'password' => 'D08ECA95-5C9B-B77B-D6B9-47AF3CED3F5E',
-                'from' => null,
-            ],
-        ],
-        'messagebird' => [
-            'driver' => MessageBird::class,
-            'live' => [
-                'url' => 'https://rest.messagebird.com/messages',
-                'originator' => null,
-                'access_key' => null,
-                'from' => null,
-            ],
-            'sandbox' => [
-                'url' => 'https://rest.messagebird.com/messages',
-                'originator' => null,
-                'access_key' => null,
-                'from' => null,
-            ],
-        ],
-        'twilio' => [
-            'driver' => Twilio::class,
-            'live' => [
-                'url' => 'https://api.twilio.com/2010-04-01/Accounts/$TWILIO_ACCOUNT_SID$/Messages.json',
-                'username' => null,
-                'password' => null,
-                'from' => null,
-            ],
-            'sandbox' => [
-                'url' => 'https://api.twilio.com/2010-04-01/Accounts/$TWILIO_ACCOUNT_SID$/Messages.json',
-                'username' => null,
-                'password' => null,
-                'from' => null,
-            ],
-        ],
-        'telnyx' => [
-            'driver' => Telnyx::class,
-            'live' => [
-                'url' => 'https://api.telnyx.com/v2/messages',
-                'username' => null,
-                'password' => null,
-                'from' => null,
-            ],
-            'sandbox' => [
-                'url' => 'https://api.telnyx.com/v2/messages',
-                'username' => null,
-                'password' => null,
-                'from' => null,
-            ],
-        ],
-        'infobip' => [
-            'driver' => Infobip::class,
-            'live' => [
-                'url' => 'https://mmk314.api.infobip.com/sms/2/text/advanced',
-                'token' => 'fb74be5a5535c425732e225f3f2697ec-9b4b774d-580b-4ece-8384-0ef883464536',
-                'from' => 'ServiceSMS',
-            ],
-            'sandbox' => [
-                'url' => 'https://mmk314.api.infobip.com/sms/2/text/advanced',
-                'token' => 'fb74be5a5535c425732e225f3f2697ec-9b4b774d-580b-4ece-8384-0ef883464536',
-                'from' => 'ServiceSMS',
-            ],
-        ],
-    ],
     'push' => [
         'mode' => 'sandbox',
         'default' => 'fcm',
@@ -148,7 +65,7 @@ return [
             ],
         ],
         'web' => [
-            'driver' => Infobip::class,
+            'driver' => \Fintech\Bell\Drivers\WebPush::class,
             'live' => [
                 'url' => 'https://mmk314.api.infobip.com/sms/2/text/advanced',
                 'username' => null,
@@ -219,8 +136,6 @@ return [
     */
 
     'repositories' => [
-        \Fintech\Bell\Interfaces\TriggerRepository::class => TriggerRepository::class,
-
         \Fintech\Bell\Interfaces\TriggerRepository::class => TriggerRepository::class,
 
         \Fintech\Bell\Interfaces\TriggerRecipientRepository::class => TriggerRecipientRepository::class,

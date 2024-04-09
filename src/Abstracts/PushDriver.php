@@ -1,13 +1,13 @@
 <?php
 
-namespace Fintech\Bell\Drivers;
+namespace Fintech\Bell\Abstracts;
 
-use Fintech\Bell\Messages\SmsMessage;
+use Fintech\Bell\Messages\PushMessage;
 use InvalidArgumentException;
 
-abstract class SmsDriver
+abstract class PushDriver
 {
-    public function validate(SmsMessage $message): void
+    public function validate(PushMessage $message): void
     {
         if ($message->getReceiver() == null || strlen($message->getReceiver()) == 0) {
             throw new InvalidArgumentException('Message recipient could not be empty.');
@@ -18,5 +18,5 @@ abstract class SmsDriver
         }
     }
 
-    abstract public function send(SmsMessage $message): void;
+    abstract public function send(PushMessage $message): void;
 }

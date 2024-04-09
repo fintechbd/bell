@@ -1,30 +1,32 @@
 <?php
 
-namespace Fintech\Bell\Drivers\Sms;
+namespace Fintech\Bell\Drivers;
 
-use Fintech\Bell\Drivers\SmsDriver;
-use Fintech\Bell\Messages\SmsMessage;
+use Fintech\Bell\Abstracts\PushDriver;
+use Fintech\Bell\Messages\PushMessage;
 use Illuminate\Support\Facades\Http;
 
 /**
- * @see https://developers.clicksend.com/docs/rest/v3/?shell#send-sms
+ * FCM (Firebase Cloud Messaging)
+ *
+ * @see https://laravel-notification-channels.com/fcm/
  */
-class ClickSend extends SmsDriver
+class FirebasePush extends PushDriver
 {
     private array $config;
 
     public function __construct()
     {
-        $mode = config('fintech.bell.sms.mode', 'sandbox');
+        $mode = config('fintech.bell.push.mode', 'sandbox');
 
-        $this->config = config("fintech.bell.sms.clicksend.{$mode}", [
+        $this->config = config("fintech.bell.push.fcm.{$mode}", [
             'url' => null,
             'username' => null,
             'password' => null,
         ]);
     }
 
-    public function send(SmsMessage $message): void
+    public function send(PushMessage $message): void
     {
         $this->validate($message);
 

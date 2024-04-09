@@ -1,15 +1,15 @@
 <?php
 
-namespace Fintech\Bell\Drivers\Sms;
+namespace Fintech\Bell\Drivers;
 
-use Fintech\Bell\Drivers\SmsDriver;
+use Fintech\Bell\Abstracts\PushDriver;
 use Fintech\Bell\Messages\SmsMessage;
 use Illuminate\Support\Facades\Http;
 
 /**
- * @see https://www.twilio.com/docs/messaging/api/message-resource
+ * @see https://laravel-notification-channels.com/webpush/
  */
-class Twilio extends SmsDriver
+class WebPush extends PushDriver
 {
     private array $config;
 
@@ -17,7 +17,7 @@ class Twilio extends SmsDriver
     {
         $mode = config('fintech.bell.sms.mode', 'sandbox');
 
-        $this->config = config("fintech.bell.sms.twilio.{$mode}", [
+        $this->config = config("fintech.bell.sms.clicksend.{$mode}", [
             'url' => null,
             'username' => null,
             'password' => null,
@@ -28,17 +28,17 @@ class Twilio extends SmsDriver
     {
         $this->validate($message);
 
-        $payload = [
-            'To' => $message->getReceiver(),
-            'Body' => $message->getContent(),
-        ];
-
-        $url = str_replace('$TWILIO_ACCOUNT_SID$', $this->config['username'], $this->config['url']);
+        $payload = ['messages' => [[
+            'source' => 'php',
+            'body' => $message->getContent(),
+            'to' => $message->getReceiver(),
+        ]]];
 
         $response = Http::withoutVerifying()
             ->timeout(30)
+            ->contentType('application/json')
             ->withBasicAuth($this->config['username'], $this->config['password'])
-            ->post($url, $payload)->json();
+            ->post($this->config['url'], $payload)->json();
 
         logger('SMS Response', [$response]);
     }

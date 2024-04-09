@@ -3,10 +3,9 @@
 namespace Fintech\Bell\Channels;
 
 use Fintech\Bell\Facades\Bell;
-use Fintech\Bell\Interfaces\ChannelInterface;
 use Illuminate\Notifications\Notification;
 
-class PushChannel implements ChannelInterface
+class PushChannel
 {
     private $driver;
 
