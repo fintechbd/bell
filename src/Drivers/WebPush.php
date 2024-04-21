@@ -40,6 +40,6 @@ class WebPush extends PushDriver
             ->withBasicAuth($this->config['username'], $this->config['password'])
             ->post($this->config['url'], $payload)->json();
 
-        logger('SMS Response', [$response]);
+        logger('Web Push Response', [$response]);
     }
 }

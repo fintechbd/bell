@@ -3,14 +3,16 @@
 namespace Fintech\Bell;
 
 use Fintech\Bell\Channels\PushChannel;
-use Fintech\Bell\Channels\SmsChannel;
 use Fintech\Bell\Commands\BellCommand;
 use Fintech\Bell\Commands\InstallCommand;
+use Fintech\Core\Traits\RegisterPackageTrait;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\ServiceProvider;
 
 class BellServiceProvider extends ServiceProvider
 {
+    use RegisterPackageTrait;
+
     /**
      * Register any application services.
      *
@@ -18,6 +20,8 @@ class BellServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->packageCode = 'bell';
+
         $this->mergeConfigFrom(
             __DIR__.'/../config/bell.php', 'fintech.bell'
         );
@@ -32,6 +36,8 @@ class BellServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        $this->injectOnConfig();
+
         $this->publishes([
             __DIR__.'/../config/bell.php' => config_path('fintech/bell.php'),
         ]);
@@ -62,10 +68,6 @@ class BellServiceProvider extends ServiceProvider
 
     private function extendNotificationChannels()
     {
-        Notification::extend('sms', function ($app) {
-            return $app->make(SmsChannel::class);
-        });
-
         Notification::extend('push', function ($app) {
             return $app->make(PushChannel::class);
         });
