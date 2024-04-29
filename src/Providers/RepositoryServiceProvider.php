@@ -1,6 +1,6 @@
 <?php
 
-namespace Fintech\Bell;
+namespace Fintech\Bell\Providers;
 
 use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\Facades\Config;

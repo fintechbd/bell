@@ -64,9 +64,7 @@
                 "Fintech\\Bell\\BellServiceProvider"
             ],
             "aliases": {
-                "Bell": "Fintech\\Bell\\Facades\\Bell",
-                "push": "MobilePushChannel",
-                "sms": "Fintech\\Bell\\Channels\\SmsChannel"
+                "Bell": "Fintech\\Bell\\Facades\\Bell"
             }
         }
     },
