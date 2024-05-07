@@ -3,7 +3,6 @@
 namespace Fintech\Bell;
 
 use Fintech\Bell\Channels\PushChannel;
-use Fintech\Bell\Commands\BellCommand;
 use Fintech\Bell\Commands\InstallCommand;
 use Fintech\Core\Traits\RegisterPackageTrait;
 use Illuminate\Support\Facades\Notification;
@@ -26,7 +25,6 @@ class BellServiceProvider extends ServiceProvider
             __DIR__.'/../config/bell.php', 'fintech.bell'
         );
 
-        $this->app->register(\Fintech\Bell\Providers\RouteServiceProvider::class);
         $this->app->register(\Fintech\Bell\Providers\RepositoryServiceProvider::class);
 
     }
@@ -58,8 +56,7 @@ class BellServiceProvider extends ServiceProvider
 
         if ($this->app->runningInConsole()) {
             $this->commands([
-                InstallCommand::class,
-                BellCommand::class,
+                InstallCommand::class
             ]);
         }
 
