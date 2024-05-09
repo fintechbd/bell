@@ -2,6 +2,7 @@
 
 // config for Fintech/Bell
 use Fintech\Bell\Drivers\FirebasePush;
+use Fintech\Bell\Drivers\WebPush;
 use Fintech\Bell\Models\NotificationTemplate;
 use Fintech\Bell\Models\Trigger;
 use Fintech\Bell\Models\TriggerAction;
@@ -65,7 +66,7 @@ return [
             ],
         ],
         'web' => [
-            'driver' => \Fintech\Bell\Drivers\WebPush::class,
+            'driver' => WebPush::class,
             'live' => [
                 'url' => 'https://mmk314.api.infobip.com/sms/2/text/advanced',
                 'username' => null,
