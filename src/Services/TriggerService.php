@@ -3,6 +3,8 @@
 namespace Fintech\Bell\Services;
 
 use Fintech\Bell\Interfaces\TriggerRepository;
+use Fintech\Core\Attributes\ListenByTrigger;
+use Fintech\Core\Listeners\TriggerListener;
 use Illuminate\Support\Facades\App;
 
 /**
@@ -62,16 +64,45 @@ class TriggerService
         return $this->triggerRepository->create($inputs);
     }
 
+    /**
+     * @return mixed
+     * @throws \ReflectionException
+     */
     public function sync()
     {
         $eventDispatcher = App::make('events');
 
-        $events = $eventDispatcher->getRawListeners();
+        $events = collect($eventDispatcher->getRawListeners());
 
-        $onlyFintechEvents = array_filter($events, function ($event) {
-            return str_starts_with($event, 'Fintech');
+        $manageableEvents = $events->where(0, '=', TriggerListener::class)->keys();
 
-        }, ARRAY_FILTER_USE_KEY);
+        $manageableEvents = $manageableEvents->filter(function ($event) {
+            $reflector = new \ReflectionClass($event);
+            return !empty($reflector->getAttributes(ListenByTrigger::class));
+        })->values();
 
+
+        $manageableEvents = $manageableEvents->map(function ($event) {
+
+            $reflector = new \ReflectionClass($event);
+
+            /**
+             * @var ListenByTrigger $triggerInfo
+             */
+            $triggerInfo = $reflector->getAttributes(ListenByTrigger::class)[0]->newInstance();
+
+            $data['name'] = $triggerInfo->name();
+            $data['code'] = $event;
+            $data['description'] = $triggerInfo->description();
+            $data['enabled'] = $triggerInfo->enabled();
+            $data['variables'] = collect($triggerInfo->variables())->map(fn($variable) => ['name' => $variable->name(), 'description' => $variable->description()])->toArray();
+//            $data['recipients'] = collect($triggerInfo->recipients())->map(fn ($recipient) => ['name' => $recipient->name(), 'description' => $recipient->description()])->toArray();
+
+            return $data;
+
+        });
+
+
+        return $manageableEvents;
     }
 }
