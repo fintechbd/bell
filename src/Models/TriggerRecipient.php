@@ -22,7 +22,7 @@ class TriggerRecipient extends BaseModel
 
     protected $guarded = ['id'];
 
-    protected $appends = ['links'];
+
 
     protected $casts = ['trigger_recipient_data' => 'array', 'restored_at' => 'datetime', 'enabled' => 'bool'];
 

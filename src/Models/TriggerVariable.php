@@ -22,7 +22,7 @@ class TriggerVariable extends BaseModel
 
     protected $guarded = ['id'];
 
-    protected $appends = ['links'];
+
 
     protected $casts = ['trigger_variable_data' => 'array', 'restored_at' => 'datetime', 'enabled' => 'bool'];
 

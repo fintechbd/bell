@@ -22,7 +22,7 @@ class NotificationTemplate extends BaseModel
 
     protected $guarded = ['id'];
 
-    protected $appends = ['links'];
+
 
     protected $casts = ['notification_template_data' => 'array', 'restored_at' => 'datetime', 'enabled' => 'bool'];
 
