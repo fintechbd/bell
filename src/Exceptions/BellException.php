@@ -7,4 +7,6 @@ use Exception;
 /**
  * Class BellException
  */
-class BellException extends Exception {}
+class BellException extends Exception
+{
+}

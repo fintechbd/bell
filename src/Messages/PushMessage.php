@@ -2,4 +2,6 @@
 
 namespace Fintech\Bell\Messages;
 
-class PushMessage {}
+class PushMessage
+{
+}
