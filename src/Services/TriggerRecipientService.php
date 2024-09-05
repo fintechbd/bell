@@ -12,7 +12,9 @@ class TriggerRecipientService
     /**
      * TriggerRecipientService constructor.
      */
-    public function __construct(public TriggerRecipientRepository $triggerRecipientRepository) {}
+    public function __construct(public TriggerRecipientRepository $triggerRecipientRepository)
+    {
+    }
 
     public function find($id, $onlyTrashed = false)
     {

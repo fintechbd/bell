@@ -6,6 +6,8 @@ use Fintech\Bell\Interfaces\TriggerRepository;
 use Fintech\Core\Attributes\ListenByTrigger;
 use Fintech\Core\Listeners\TriggerListener;
 use Illuminate\Support\Facades\App;
+use ReflectionClass;
+use ReflectionException;
 
 /**
  * Class TriggerService
@@ -15,7 +17,9 @@ class TriggerService
     /**
      * TriggerService constructor.
      */
-    public function __construct(public TriggerRepository $triggerRepository) {}
+    public function __construct(public TriggerRepository $triggerRepository)
+    {
+    }
 
     public function find($id, $onlyTrashed = false)
     {
@@ -64,7 +68,7 @@ class TriggerService
     /**
      * @return mixed
      *
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function sync()
     {
@@ -75,14 +79,14 @@ class TriggerService
         $manageableEvents = $events->where(0, '=', TriggerListener::class)->keys();
 
         $manageableEvents = $manageableEvents->filter(function ($event) {
-            $reflector = new \ReflectionClass($event);
+            $reflector = new ReflectionClass($event);
 
-            return ! empty($reflector->getAttributes(ListenByTrigger::class));
+            return !empty($reflector->getAttributes(ListenByTrigger::class));
         })->values();
 
         $manageableEvents = $manageableEvents->map(function ($event) {
 
-            $reflector = new \ReflectionClass($event);
+            $reflector = new ReflectionClass($event);
 
             /**
              * @var ListenByTrigger $triggerInfo
@@ -93,7 +97,7 @@ class TriggerService
             $data['code'] = $event;
             $data['description'] = $triggerInfo->description();
             $data['enabled'] = $triggerInfo->enabled();
-            $data['variables'] = collect($triggerInfo->variables())->map(fn ($variable) => ['name' => $variable->name(), 'description' => $variable->description()])->toArray();
+            $data['variables'] = collect($triggerInfo->variables())->map(fn($variable) => ['name' => $variable->name(), 'description' => $variable->description()])->toArray();
             //            $data['recipients'] = collect($triggerInfo->recipients())->map(fn ($recipient) => ['name' => $recipient->name(), 'description' => $recipient->description()])->toArray();
 
             return $data;
