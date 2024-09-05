@@ -12,9 +12,7 @@ class TriggerActionService
     /**
      * TriggerActionService constructor.
      */
-    public function __construct(public TriggerActionRepository $triggerActionRepository)
-    {
-    }
+    public function __construct(public TriggerActionRepository $triggerActionRepository) {}
 
     public function find($id, $onlyTrashed = false)
     {
