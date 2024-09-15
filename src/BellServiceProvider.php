@@ -23,7 +23,7 @@ class BellServiceProvider extends ServiceProvider
         $this->packageCode = 'bell';
 
         $this->mergeConfigFrom(
-            __DIR__.'/../config/bell.php', 'fintech.bell'
+            __DIR__ . '/../config/bell.php', 'fintech.bell'
         );
 
         $this->app->register(RepositoryServiceProvider::class);
@@ -38,23 +38,23 @@ class BellServiceProvider extends ServiceProvider
         $this->injectOnConfig();
 
         $this->publishes([
-            __DIR__.'/../config/bell.php' => config_path('fintech/bell.php'),
+            __DIR__ . '/../config/bell.php' => config_path('fintech/bell.php'),
         ]);
 
-        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
 
-        $this->loadTranslationsFrom(__DIR__.'/../lang', 'bell');
+        $this->loadTranslationsFrom(__DIR__ . '/../lang', 'bell');
 
         $this->publishes([
-            __DIR__.'/../lang' => $this->app->langPath('vendor/bell'),
+            __DIR__ . '/../lang' => $this->app->langPath('vendor/bell'),
         ]);
 
-        $this->loadViewsFrom(__DIR__.'/../resources/views', 'bell');
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'bell');
 
-        $this->loadRoutesFrom(__DIR__.'/../routes/api.php');
+        $this->loadRoutesFrom(__DIR__ . '/../routes/api.php');
 
         $this->publishes([
-            __DIR__.'/../resources/views' => resource_path('views/vendor/bell'),
+            __DIR__ . '/../resources/views' => resource_path('views/vendor/bell'),
         ]);
 
         if ($this->app->runningInConsole()) {

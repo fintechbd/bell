@@ -12,7 +12,9 @@ class NotificationTemplateService
     /**
      * NotificationTemplateService constructor.
      */
-    public function __construct(public NotificationTemplateRepository $notificationTemplateRepository) {}
+    public function __construct(public NotificationTemplateRepository $notificationTemplateRepository)
+    {
+    }
 
     public function find($id, $onlyTrashed = false)
     {

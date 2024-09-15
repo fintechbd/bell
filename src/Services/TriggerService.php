@@ -17,7 +17,9 @@ class TriggerService
     /**
      * TriggerService constructor.
      */
-    public function __construct(public TriggerRepository $triggerRepository) {}
+    public function __construct(public TriggerRepository $triggerRepository)
+    {
+    }
 
     public function find($id, $onlyTrashed = false)
     {
@@ -79,7 +81,7 @@ class TriggerService
         $manageableEvents = $manageableEvents->filter(function ($event) {
             $reflector = new ReflectionClass($event);
 
-            return ! empty($reflector->getAttributes(ListenByTrigger::class));
+            return !empty($reflector->getAttributes(ListenByTrigger::class));
         })->values();
 
         $manageableEvents = $manageableEvents->map(function ($event) {
@@ -95,7 +97,7 @@ class TriggerService
             $data['code'] = $event;
             $data['description'] = $triggerInfo->description();
             $data['enabled'] = $triggerInfo->enabled();
-            $data['variables'] = collect($triggerInfo->variables())->map(fn ($variable) => ['name' => $variable->name(), 'description' => $variable->description()])->toArray();
+            $data['variables'] = collect($triggerInfo->variables())->map(fn($variable) => ['name' => $variable->name(), 'description' => $variable->description()])->toArray();
             //            $data['recipients'] = collect($triggerInfo->recipients())->map(fn ($recipient) => ['name' => $recipient->name(), 'description' => $recipient->description()])->toArray();
 
             return $data;
