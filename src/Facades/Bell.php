@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static \Illuminate\Contracts\Pagination\Paginator|\Illuminate\Support\Collection|TriggerVariableService triggerVariable(array $filters = null)
  * @method static \Illuminate\Contracts\Pagination\Paginator|\Illuminate\Support\Collection|NotificationTemplateService notificationTemplate(array $filters = null)
  * @method static \Illuminate\Contracts\Pagination\Paginator|\Illuminate\Support\Collection|TriggerActionService triggerAction(array $filters = null)
- *                                                     // Crud Service Method Point Do not Remove //
+ *                                                                                                                                                    // Crud Service Method Point Do not Remove //
  *
  * @see \Fintech\Bell\Bell
  */
