@@ -11,12 +11,12 @@ use Fintech\Bell\Services\TriggerVariableService;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @method static SmsDriver sms()
- * @method static TriggerService trigger()
- * @method static TriggerRecipientService triggerRecipient()
- * @method static TriggerVariableService triggerVariable()
- * @method static NotificationTemplateService notificationTemplate()
- * @method static TriggerActionService triggerAction()
+ * @method static \Illuminate\Contracts\Pagination\Paginator|\Illuminate\Support\Collection|SmsDriver sms(array $filters = null)
+ * @method static \Illuminate\Contracts\Pagination\Paginator|\Illuminate\Support\Collection|TriggerService trigger(array $filters = null)
+ * @method static \Illuminate\Contracts\Pagination\Paginator|\Illuminate\Support\Collection|TriggerRecipientService triggerRecipient(array $filters = null)
+ * @method static \Illuminate\Contracts\Pagination\Paginator|\Illuminate\Support\Collection|TriggerVariableService triggerVariable(array $filters = null)
+ * @method static \Illuminate\Contracts\Pagination\Paginator|\Illuminate\Support\Collection|NotificationTemplateService notificationTemplate(array $filters = null)
+ * @method static \Illuminate\Contracts\Pagination\Paginator|\Illuminate\Support\Collection|TriggerActionService triggerAction(array $filters = null)
  *                                                     // Crud Service Method Point Do not Remove //
  *
  * @see \Fintech\Bell\Bell
