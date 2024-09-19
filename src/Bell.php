@@ -24,7 +24,7 @@ class Bell
 
         $driver = config("fintech.bell.push.{$active}.driver");
 
-        return app($driver);
+        return \singleton($driver);
     }
 
     /**
