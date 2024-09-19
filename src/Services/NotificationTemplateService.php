@@ -7,8 +7,10 @@ use Fintech\Bell\Interfaces\NotificationTemplateRepository;
 /**
  * Class NotificationTemplateService
  */
-class NotificationTemplateService extends \Fintech\Core\Abstracts\Service
+class NotificationTemplateService
 {
+    use \Fintech\Core\Traits\HasFindWhereSearch;
+
     /**
      * NotificationTemplateService constructor.
      */

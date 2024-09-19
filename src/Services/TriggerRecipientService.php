@@ -7,8 +7,10 @@ use Fintech\Bell\Interfaces\TriggerRecipientRepository;
 /**
  * Class TriggerRecipientService
  */
-class TriggerRecipientService extends \Fintech\Core\Abstracts\Service
+class TriggerRecipientService
 {
+    use \Fintech\Core\Traits\HasFindWhereSearch;
+
     /**
      * TriggerRecipientService constructor.
      */

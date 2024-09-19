@@ -7,8 +7,10 @@ use Fintech\Bell\Interfaces\TriggerVariableRepository;
 /**
  * Class TriggerVariableService
  */
-class TriggerVariableService extends \Fintech\Core\Abstracts\Service
+class TriggerVariableService
 {
+    use \Fintech\Core\Traits\HasFindWhereSearch;
+
     /**
      * TriggerVariableService constructor.
      */

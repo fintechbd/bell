@@ -12,8 +12,10 @@ use ReflectionException;
 /**
  * Class TriggerService
  */
-class TriggerService extends \Fintech\Core\Abstracts\Service
+class TriggerService
 {
+    use \Fintech\Core\Traits\HasFindWhereSearch;
+
     /**
      * TriggerService constructor.
      */

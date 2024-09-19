@@ -7,8 +7,10 @@ use Fintech\Bell\Interfaces\TriggerActionRepository;
 /**
  * Class TriggerActionService
  */
-class TriggerActionService extends \Fintech\Core\Abstracts\Service
+class TriggerActionService
 {
+    use \Fintech\Core\Traits\HasFindWhereSearch;
+
     /**
      * TriggerActionService constructor.
      */
