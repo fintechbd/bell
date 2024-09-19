@@ -7,7 +7,7 @@ use Fintech\Bell\Interfaces\TriggerActionRepository;
 /**
  * Class TriggerActionService
  */
-class TriggerActionService
+class TriggerActionService extends \Fintech\Core\Abstracts\Service
 {
     /**
      * TriggerActionService constructor.

@@ -12,7 +12,7 @@ use ReflectionException;
 /**
  * Class TriggerService
  */
-class TriggerService
+class TriggerService extends \Fintech\Core\Abstracts\Service
 {
     /**
      * TriggerService constructor.

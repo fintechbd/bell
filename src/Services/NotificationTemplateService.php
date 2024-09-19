@@ -7,7 +7,7 @@ use Fintech\Bell\Interfaces\NotificationTemplateRepository;
 /**
  * Class NotificationTemplateService
  */
-class NotificationTemplateService
+class NotificationTemplateService extends \Fintech\Core\Abstracts\Service
 {
     /**
      * NotificationTemplateService constructor.

@@ -7,7 +7,7 @@ use Fintech\Bell\Interfaces\TriggerVariableRepository;
 /**
  * Class TriggerVariableService
  */
-class TriggerVariableService
+class TriggerVariableService extends \Fintech\Core\Abstracts\Service
 {
     /**
      * TriggerVariableService constructor.

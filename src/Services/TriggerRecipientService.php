@@ -7,7 +7,7 @@ use Fintech\Bell\Interfaces\TriggerRecipientRepository;
 /**
  * Class TriggerRecipientService
  */
-class TriggerRecipientService
+class TriggerRecipientService extends \Fintech\Core\Abstracts\Service
 {
     /**
      * TriggerRecipientService constructor.
