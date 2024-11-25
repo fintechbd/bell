@@ -1,10 +1,10 @@
 <?php
 
-use Fintech\RestApi\Http\Controllers\Bell\NotificationTemplateController;
-use Fintech\RestApi\Http\Controllers\Bell\TriggerActionController;
-use Fintech\RestApi\Http\Controllers\Bell\TriggerController;
-use Fintech\RestApi\Http\Controllers\Bell\TriggerRecipientController;
-use Fintech\RestApi\Http\Controllers\Bell\TriggerVariableController;
+use Fintech\Bell\Http\Controllers\NotificationTemplateController;
+use Fintech\Bell\Http\Controllers\TriggerActionController;
+use Fintech\Bell\Http\Controllers\TriggerController;
+use Fintech\Bell\Http\Controllers\TriggerRecipientController;
+use Fintech\Bell\Http\Controllers\TriggerVariableController;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Route;
 
