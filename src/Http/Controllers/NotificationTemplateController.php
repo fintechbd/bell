@@ -72,7 +72,7 @@ class NotificationTemplateController extends Controller
             }
 
             return response()->created([
-                'message' => __('restapi::messages.resource.created', ['model' => 'Notification Template']),
+                'message' => __('core::messages.resource.created', ['model' => 'Notification Template']),
                 'id' => $notificationTemplate->id,
             ]);
 
@@ -138,7 +138,7 @@ class NotificationTemplateController extends Controller
                 throw (new UpdateOperationException)->setModel(config('fintech.bell.notification_template_model'), $id);
             }
 
-            return response()->updated(__('restapi::messages.resource.updated', ['model' => 'Notification Template']));
+            return response()->updated(__('core::messages.resource.updated', ['model' => 'Notification Template']));
 
         } catch (ModelNotFoundException $exception) {
 
@@ -176,7 +176,7 @@ class NotificationTemplateController extends Controller
                 throw (new DeleteOperationException)->setModel(config('fintech.bell.notification_template_model'), $id);
             }
 
-            return response()->deleted(__('restapi::messages.resource.deleted', ['model' => 'Notification Template']));
+            return response()->deleted(__('core::messages.resource.deleted', ['model' => 'Notification Template']));
 
         } catch (ModelNotFoundException $exception) {
 
@@ -212,7 +212,7 @@ class NotificationTemplateController extends Controller
                 throw (new RestoreOperationException)->setModel(config('fintech.bell.notification_template_model'), $id);
             }
 
-            return response()->restored(__('restapi::messages.resource.restored', ['model' => 'Notification Template']));
+            return response()->restored(__('core::messages.resource.restored', ['model' => 'Notification Template']));
 
         } catch (ModelNotFoundException $exception) {
 
@@ -238,7 +238,7 @@ class NotificationTemplateController extends Controller
 
             $notificationTemplatePaginate = Bell::notificationTemplate()->export($inputs);
 
-            return response()->exported(__('restapi::messages.resource.exported', ['model' => 'Notification Template']));
+            return response()->exported(__('core::messages.resource.exported', ['model' => 'Notification Template']));
 
         } catch (Exception $exception) {
 

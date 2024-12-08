@@ -72,7 +72,7 @@ class TriggerVariableController extends Controller
             }
 
             return response()->created([
-                'message' => __('restapi::messages.resource.created', ['model' => 'Trigger Variable']),
+                'message' => __('core::messages.resource.created', ['model' => 'Trigger Variable']),
                 'id' => $triggerVariable->id,
             ]);
 
@@ -138,7 +138,7 @@ class TriggerVariableController extends Controller
                 throw (new UpdateOperationException)->setModel(config('fintech.bell.trigger_variable_model'), $id);
             }
 
-            return response()->updated(__('restapi::messages.resource.updated', ['model' => 'Trigger Variable']));
+            return response()->updated(__('core::messages.resource.updated', ['model' => 'Trigger Variable']));
 
         } catch (ModelNotFoundException $exception) {
 
@@ -176,7 +176,7 @@ class TriggerVariableController extends Controller
                 throw (new DeleteOperationException)->setModel(config('fintech.bell.trigger_variable_model'), $id);
             }
 
-            return response()->deleted(__('restapi::messages.resource.deleted', ['model' => 'Trigger Variable']));
+            return response()->deleted(__('core::messages.resource.deleted', ['model' => 'Trigger Variable']));
 
         } catch (ModelNotFoundException $exception) {
 
@@ -212,7 +212,7 @@ class TriggerVariableController extends Controller
                 throw (new RestoreOperationException)->setModel(config('fintech.bell.trigger_variable_model'), $id);
             }
 
-            return response()->restored(__('restapi::messages.resource.restored', ['model' => 'Trigger Variable']));
+            return response()->restored(__('core::messages.resource.restored', ['model' => 'Trigger Variable']));
 
         } catch (ModelNotFoundException $exception) {
 
@@ -238,7 +238,7 @@ class TriggerVariableController extends Controller
 
             $triggerVariablePaginate = Bell::triggerVariable()->export($inputs);
 
-            return response()->exported(__('restapi::messages.resource.exported', ['model' => 'Trigger Variable']));
+            return response()->exported(__('core::messages.resource.exported', ['model' => 'Trigger Variable']));
 
         } catch (Exception $exception) {
 

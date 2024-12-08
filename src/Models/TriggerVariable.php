@@ -63,10 +63,10 @@ class TriggerVariable extends BaseModel implements Auditable
         $primaryKey = $this->getKey();
 
         $links = [
-            'show' => action_link(route('bell.trigger-variables.show', $primaryKey), __('restapi::messages.action.show'), 'get'),
-            'update' => action_link(route('bell.trigger-variables.update', $primaryKey), __('restapi::messages.action.update'), 'put'),
-            'destroy' => action_link(route('bell.trigger-variables.destroy', $primaryKey), __('restapi::messages.action.destroy'), 'delete'),
-            'restore' => action_link(route('bell.trigger-variables.restore', $primaryKey), __('restapi::messages.action.restore'), 'post'),
+            'show' => action_link(route('bell.trigger-variables.show', $primaryKey), __('core::messages.action.show'), 'get'),
+            'update' => action_link(route('bell.trigger-variables.update', $primaryKey), __('core::messages.action.update'), 'put'),
+            'destroy' => action_link(route('bell.trigger-variables.destroy', $primaryKey), __('core::messages.action.destroy'), 'delete'),
+            'restore' => action_link(route('bell.trigger-variables.restore', $primaryKey), __('core::messages.action.restore'), 'post'),
         ];
 
         if ($this->getAttribute('deleted_at') == null) {
