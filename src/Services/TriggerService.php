@@ -3,20 +3,24 @@
 namespace Fintech\Bell\Services;
 
 use Fintech\Banco\Interfaces\BankAccountRepository;
+use Illuminate\Support\Collection;
 
 /**
  * Class TriggerService
  */
 class TriggerService
 {
+    private Collection $triggers;
+
     /**
      * BankAccountService constructor.
      */
     public function __construct()
     {
+        $this->triggers = new Collection();
     }
 
-    public function find($id)
+    public function find($code)
     {
     }
 
