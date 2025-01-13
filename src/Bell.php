@@ -32,26 +32,24 @@ class Bell
         return \singleton(TriggerService::class, $filters);
     }
 
-    public function triggerRecipient($filters = null)
+    /**
+     * @return \Fintech\Bell\Services\NotificationService
+     */
+    public function notification()
     {
-        return \singleton(TriggerRecipientService::class, $filters);
+        return app(\Fintech\Bell\Services\NotificationService::class);
     }
 
-    public function triggerVariable($filters = null)
+    /**
+     * @return \Fintech\Bell\Services\NotificationService
+     */
+    public function notification()
     {
-        return \singleton(TriggerVariableService::class, $filters);
-    }
-
-    public function notificationTemplate($filters = null)
-    {
-        return \singleton(NotificationTemplateService::class, $filters);
-    }
-
-    public function triggerAction($filters = null)
-    {
-        return \singleton(TriggerActionService::class, $filters);
+        return app(\Fintech\Bell\Services\NotificationService::class);
     }
 
     //** Crud Service Method Point Do not Remove **//
+
+
 
 }

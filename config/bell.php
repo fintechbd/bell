@@ -3,16 +3,6 @@
 // config for Fintech/Bell
 use Fintech\Bell\Drivers\FirebasePush;
 use Fintech\Bell\Drivers\WebPush;
-use Fintech\Bell\Models\NotificationTemplate;
-use Fintech\Bell\Models\Trigger;
-use Fintech\Bell\Models\TriggerAction;
-use Fintech\Bell\Models\TriggerRecipient;
-use Fintech\Bell\Models\TriggerVariable;
-use Fintech\Bell\Repositories\Eloquent\NotificationTemplateRepository;
-use Fintech\Bell\Repositories\Eloquent\TriggerActionRepository;
-use Fintech\Bell\Repositories\Eloquent\TriggerRecipientRepository;
-use Fintech\Bell\Repositories\Eloquent\TriggerRepository;
-use Fintech\Bell\Repositories\Eloquent\TriggerVariableRepository;
 
 return [
 
@@ -82,50 +72,26 @@ return [
         ],
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Trigger Model
-    |--------------------------------------------------------------------------
-    |
-    | This value will be used to across system where model is needed
-    */
-    'trigger_model' => Trigger::class,
 
+    
     /*
     |--------------------------------------------------------------------------
-    | Trigger Recipient Model
+    | Notification Model
     |--------------------------------------------------------------------------
     |
     | This value will be used to across system where model is needed
     */
-    'trigger_recipient_model' => TriggerRecipient::class,
+    'notification_model' => \Fintech\Bell\Models\Notification::class,
 
+    
     /*
     |--------------------------------------------------------------------------
-    | Trigger Variable Model
+    | Notification Model
     |--------------------------------------------------------------------------
     |
     | This value will be used to across system where model is needed
     */
-    'trigger_variable_model' => TriggerVariable::class,
-
-    /*
-    |--------------------------------------------------------------------------
-    | Notification Template Model
-    |--------------------------------------------------------------------------
-    |
-    | This value will be used to across system where model is needed
-    */
-    'notification_template_model' => NotificationTemplate::class,
-
-    /*
-    |--------------------------------------------------------------------------
-    | TriggerAction Model
-    |--------------------------------------------------------------------------
-    |
-    | This value will be used to across system where model is needed
-    */
-    'trigger_action_model' => TriggerAction::class,
+    'notification_model' => \Fintech\Bell\Models\Notification::class,
 
     //** Model Config Point Do not Remove **//
     /*
@@ -137,15 +103,9 @@ return [
     */
 
     'repositories' => [
-        \Fintech\Bell\Interfaces\TriggerRepository::class => TriggerRepository::class,
+        \Fintech\Bell\Interfaces\NotificationRepository::class => \Fintech\Bell\Repositories\Eloquent\NotificationRepository::class,
 
-        \Fintech\Bell\Interfaces\TriggerRecipientRepository::class => TriggerRecipientRepository::class,
-
-        \Fintech\Bell\Interfaces\TriggerVariableRepository::class => TriggerVariableRepository::class,
-
-        \Fintech\Bell\Interfaces\NotificationTemplateRepository::class => NotificationTemplateRepository::class,
-
-        \Fintech\Bell\Interfaces\TriggerActionRepository::class => TriggerActionRepository::class,
+        \Fintech\Bell\Interfaces\NotificationRepository::class => \Fintech\Bell\Repositories\Eloquent\NotificationRepository::class,
 
         //** Repository Binding Config Point Do not Remove **//
     ],
