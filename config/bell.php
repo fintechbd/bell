@@ -72,8 +72,6 @@ return [
         ],
     ],
 
-
-    
     /*
     |--------------------------------------------------------------------------
     | Notification Model
@@ -83,7 +81,6 @@ return [
     */
     'notification_model' => \Fintech\Bell\Models\Notification::class,
 
-    
     /*
     |--------------------------------------------------------------------------
     | Notification Model
@@ -93,7 +90,7 @@ return [
     */
     'notification_model' => \Fintech\Bell\Models\Notification::class,
 
-    //** Model Config Point Do not Remove **//
+    // ** Model Config Point Do not Remove **//
     /*
     |--------------------------------------------------------------------------
     | Repositories
@@ -107,7 +104,7 @@ return [
 
         \Fintech\Bell\Interfaces\NotificationRepository::class => \Fintech\Bell\Repositories\Eloquent\NotificationRepository::class,
 
-        //** Repository Binding Config Point Do not Remove **//
+        // ** Repository Binding Config Point Do not Remove **//
     ],
 
 ];

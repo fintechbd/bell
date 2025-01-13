@@ -1,11 +1,6 @@
 <?php
 
 use Fintech\Bell\Http\Controllers\AvailableTriggerController;
-use Fintech\Bell\Http\Controllers\NotificationTemplateController;
-use Fintech\Bell\Http\Controllers\TriggerActionController;
-use Fintech\Bell\Http\Controllers\TriggerController;
-use Fintech\Bell\Http\Controllers\TriggerRecipientController;
-use Fintech\Bell\Http\Controllers\TriggerVariableController;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Route;
 
@@ -26,7 +21,7 @@ if (Config::get('fintech.bell.enabled')) {
             ->group(function () {
                 Route::get('triggers', AvailableTriggerController::class)
                     ->name('triggers.index');
-                //DO NOT REMOVE THIS LINE//
+                // DO NOT REMOVE THIS LINE//
             });
     });
 }

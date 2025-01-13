@@ -3,11 +3,7 @@
 namespace Fintech\Bell;
 
 use Fintech\Bell\Exceptions\BellException;
-use Fintech\Bell\Services\NotificationTemplateService;
-use Fintech\Bell\Services\TriggerActionService;
-use Fintech\Bell\Services\TriggerRecipientService;
 use Fintech\Bell\Services\TriggerService;
-use Fintech\Bell\Services\TriggerVariableService;
 
 class Bell
 {
@@ -48,8 +44,6 @@ class Bell
         return app(\Fintech\Bell\Services\NotificationService::class);
     }
 
-    //** Crud Service Method Point Do not Remove **//
-
-
+    // ** Crud Service Method Point Do not Remove **//
 
 }
