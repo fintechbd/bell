@@ -3,7 +3,6 @@
 namespace Fintech\Bell\Services;
 
 use Fintech\Core\Attributes\ListenByTrigger;
-use Fintech\Core\Attributes\Variable;
 use Fintech\Core\Listeners\TriggerListener;
 use Illuminate\Auth\Events\Attempting;
 use Illuminate\Auth\Events\Failed;
@@ -21,6 +20,7 @@ class TriggerService
 
     /**
      * BankAccountService constructor.
+     *
      * @throws \ReflectionException
      */
     public function __construct()
@@ -28,22 +28,16 @@ class TriggerService
         $this->loadTriggers();
     }
 
-
-    public function find($code)
-    {
-    }
+    public function find($code) {}
 
     public function list(array $filters = [])
     {
         return $this->triggers;
     }
 
-    public function sync(array $options = [])
-    {
-    }
+    public function sync(array $options = []) {}
 
     /**
-     * @return void
      * @throws \ReflectionException
      */
     private function loadTriggers(): void
@@ -57,6 +51,7 @@ class TriggerService
             ->keys()
             ->map(function ($event) {
                 $reflector = new ReflectionClass($event);
+
                 return (empty($reflector->getAttributes(ListenByTrigger::class)))
                     ? $this->handleSystemEvent($event)
                     : $this->handlePackageEvent($event, $reflector);
@@ -73,7 +68,7 @@ class TriggerService
         $data['code'] = $event;
         $data['description'] = $triggerInfo->description();
         $data['enabled'] = $triggerInfo->enabled();
-        $data['variables'] = collect($triggerInfo->variables())->map(fn($variable) => ['name' => $variable->name(), 'description' => $variable->description()])->toArray();
+        $data['variables'] = collect($triggerInfo->variables())->map(fn ($variable) => ['name' => $variable->name(), 'description' => $variable->description()])->toArray();
 
         return $data;
 
@@ -88,7 +83,7 @@ class TriggerService
                 'description' => 'Trigger fires when user tries to logging to system over multiple times in short duration',
                 'enabled' => true,
                 'variables' => [
-                    ['name' => '__' . config('fintech.auth.auth_field', 'login_id') . '__', 'description' => 'Email, phone number used to log in'],
+                    ['name' => '__'.config('fintech.auth.auth_field', 'login_id').'__', 'description' => 'Email, phone number used to log in'],
                     ['name' => '__ip__', 'description' => 'IP address used to log in'],
                     ['name' => '__platform__', 'description' => 'User agent platform used to attempt'],
                 ],
@@ -99,7 +94,7 @@ class TriggerService
                 'description' => 'Trigger fires when user tries to logging to system',
                 'enabled' => true,
                 'variables' => [
-                    ['name' => '__' . config('fintech.auth.auth_field', 'login_id') . '__', 'description' => 'Email, phone number used to log in'],
+                    ['name' => '__'.config('fintech.auth.auth_field', 'login_id').'__', 'description' => 'Email, phone number used to log in'],
                     ['name' => '__ip__', 'description' => 'IP address used to log in'],
                     ['name' => '__platform__', 'description' => 'User agent platform used to attempt'],
                 ],

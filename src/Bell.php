@@ -36,7 +36,6 @@ class Bell
         return app(\Fintech\Bell\Services\NotificationService::class);
     }
 
-
     // ** Crud Service Method Point Do not Remove **//
 
 }
