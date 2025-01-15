@@ -3,7 +3,7 @@
 namespace Fintech\Bell\Services;
 
 use Fintech\Core\Attributes\ListenByTrigger;
-use Fintech\Core\Listeners\TriggerListener;
+use Fintech\Core\Listeners\TriggerNotification;
 use Illuminate\Auth\Events\Attempting;
 use Illuminate\Auth\Events\Failed;
 use Illuminate\Auth\Events\Lockout;
@@ -46,7 +46,7 @@ class TriggerService
 
         $this->triggers = collect($eventDispatcher->getRawListeners())
             ->filter(function ($listeners) {
-                return in_array(TriggerListener::class, $listeners);
+                return in_array(TriggerNotification::class, $listeners);
             })
             ->keys()
             ->map(function ($event) {
