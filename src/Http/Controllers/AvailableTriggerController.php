@@ -27,8 +27,6 @@ class AvailableTriggerController extends Controller
 
             $triggers = Bell::trigger()->list($inputs);
 
-            dd($triggers);
-
             return new TriggerCollection($triggers);
 
         } catch (Exception $exception) {
