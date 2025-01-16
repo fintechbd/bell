@@ -64,6 +64,7 @@ class TriggerService
     public function handlePackageEvent(string $event, ReflectionClass $reflector): array
     {
         $triggerInfo = $reflector->getAttributes(ListenByTrigger::class)[0]->newInstance();
+        $data['id'] = $event;
         $data['name'] = $triggerInfo->name();
         $data['code'] = $event;
         $data['description'] = $triggerInfo->description();
@@ -78,6 +79,7 @@ class TriggerService
     {
         return match ($event) {
             Lockout::class => [
+                'id' => $event,
                 'name' => 'Login Attempt Lockout',
                 'code' => $event,
                 'description' => 'Trigger fires when user tries to logging to system over multiple times in short duration',
@@ -89,6 +91,7 @@ class TriggerService
                 ],
             ],
             Attempting::class => [
+                'id' => $event,
                 'name' => 'Login Attempting',
                 'code' => $event,
                 'description' => 'Trigger fires when user tries to logging to system',
@@ -100,6 +103,7 @@ class TriggerService
                 ],
             ],
             Failed::class => [
+                'id' => $event,
                 'name' => 'Login Attempt Failed',
                 'code' => $event,
                 'description' => 'Trigger fires when user failed to logging to system',
@@ -115,24 +119,8 @@ class TriggerService
                     ['name' => '__platform__', 'description' => 'User agent platform used to attempt'],
                 ],
             ],
-            Failed::class => [
-                'name' => 'Login Attempt Failed',
-                'code' => $event,
-                'description' => 'Trigger fires when user failed to logging to system',
-                'enabled' => true,
-                'variables' => [
-                    ['name' => '__account_name__', 'description' => 'Name of the user tried login.'],
-                    ['name' => '__account_mobile__', 'description' => 'Mobile number associate with requested user.'],
-                    ['name' => '__account_email__', 'description' => 'Email address associate with requested user.'],
-                    ['name' => '__password_attempt_count__', 'description' => 'Number of times wrong password attempted.'],
-                    ['name' => '__account_status__', 'description' => 'User account before frozen/suspended status.'],
-                    ['name' => '__password_attempt_limit__', 'description' => 'The maximum number of times a user may try to customize my system'],
-                    ['name' => '__ip__', 'description' => 'IP address used to log in'],
-                    ['name' => '__platform__', 'description' => 'User agent platform used to attempt'],
-                ],
-            ],
-
             default => [
+                'id' => $event,
                 'name' => $event,
                 'code' => $event,
                 'description' => 'System Event',

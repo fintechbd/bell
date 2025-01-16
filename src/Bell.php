@@ -29,11 +29,11 @@ class Bell
     }
 
     /**
-     * @return \Fintech\Bell\Services\NotificationService
+     * @return \Fintech\Bell\Services\TemplateService
      */
-    public function notification()
+    public function template()
     {
-        return app(\Fintech\Bell\Services\NotificationService::class);
+        return app(\Fintech\Bell\Services\TemplateService::class);
     }
 
     // ** Crud Service Method Point Do not Remove **//

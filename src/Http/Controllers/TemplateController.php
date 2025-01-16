@@ -42,17 +42,18 @@ class TemplateController extends Controller
      */
     public function index(IndexTemplateRequest $request): TemplateCollection|JsonResponse
     {
-        try {
+//        try {
             $inputs = $request->validated();
 
-            $templateControllerPaginate = Bell::templateController()->list($inputs);
+            $templatePaginate = Bell::template()->list($inputs);
 
-            return new TemplateCollection($templateControllerPaginate);
+            return new TemplateCollection($templatePaginate);
 
-        } catch (Exception $exception) {
-
-            return response()->failed($exception);
-        }
+//        } catch (Exception $exception) {
+//            throw new Exception($exception->getMessage(), $exception->getCode(), $exception);
+//
+////            return response()->failed($exception);
+//        }
     }
 
     /**
@@ -69,15 +70,15 @@ class TemplateController extends Controller
         try {
             $inputs = $request->validated();
 
-            $templateController = Bell::templateController()->create($inputs);
+            $template = Bell::template()->create($inputs);
 
-            if (!$templateController) {
+            if (!$template) {
                 throw (new StoreOperationException)->setModel(config('fintech.bell.template_controller_model'));
             }
 
             return response()->created([
                 'message' => __('restapi::messages.resource.created', ['model' => 'Template Controller']),
-                'id' => $templateController->id
+                'id' => $template->id
              ]);
 
         } catch (Exception $exception) {
@@ -99,13 +100,13 @@ class TemplateController extends Controller
     {
         try {
 
-            $templateController = Bell::templateController()->find($id);
+            $template = Bell::template()->find($id);
 
-            if (!$templateController) {
+            if (!$template) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.bell.template_controller_model'), $id);
             }
 
-            return new TemplateResource($templateController);
+            return new TemplateResource($template);
 
         } catch (ModelNotFoundException $exception) {
 
@@ -132,15 +133,15 @@ class TemplateController extends Controller
     {
         try {
 
-            $templateController = Bell::templateController()->find($id);
+            $template = Bell::template()->find($id);
 
-            if (!$templateController) {
+            if (!$template) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.bell.template_controller_model'), $id);
             }
 
             $inputs = $request->validated();
 
-            if (!Bell::templateController()->update($id, $inputs)) {
+            if (!Bell::template()->update($id, $inputs)) {
 
                 throw (new UpdateOperationException)->setModel(config('fintech.bell.template_controller_model'), $id);
             }
@@ -171,13 +172,13 @@ class TemplateController extends Controller
     {
         try {
 
-            $templateController = Bell::templateController()->find($id);
+            $template = Bell::template()->find($id);
 
-            if (!$templateController) {
+            if (!$template) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.bell.template_controller_model'), $id);
             }
 
-            if (!Bell::templateController()->destroy($id)) {
+            if (!Bell::template()->destroy($id)) {
 
                 throw (new DeleteOperationException())->setModel(config('fintech.bell.template_controller_model'), $id);
             }
@@ -207,13 +208,13 @@ class TemplateController extends Controller
     {
         try {
 
-            $templateController = Bell::templateController()->find($id, true);
+            $template = Bell::template()->find($id, true);
 
-            if (!$templateController) {
+            if (!$template) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.bell.template_controller_model'), $id);
             }
 
-            if (!Bell::templateController()->restore($id)) {
+            if (!Bell::template()->restore($id)) {
 
                 throw (new RestoreOperationException())->setModel(config('fintech.bell.template_controller_model'), $id);
             }
@@ -245,7 +246,7 @@ class TemplateController extends Controller
         try {
             $inputs = $request->validated();
 
-            $templateControllerPaginate = Bell::templateController()->export($inputs);
+            $templatePaginate = Bell::template()->export($inputs);
 
             return response()->exported(__('restapi::messages.resource.exported', ['model' => 'Template Controller']));
 
@@ -270,9 +271,9 @@ class TemplateController extends Controller
         try {
             $inputs = $request->validated();
 
-            $templateControllerPaginate = Bell::templateController()->list($inputs);
+            $templatePaginate = Bell::template()->list($inputs);
 
-            return new TemplateCollection($templateControllerPaginate);
+            return new TemplateCollection($templatePaginate);
 
         } catch (Exception $exception) {
 

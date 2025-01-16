@@ -2,13 +2,15 @@
 
 namespace Fintech\Bell\Models;
 
-use Fintech\Core\Traits\AuditableTrait;
 use Fintech\Core\Abstracts\BaseModel;
+use Fintech\Core\Traits\Audits\BlameableTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Template extends BaseModel
+class Template extends BaseModel implements Auditable
 {
-   use AuditableTrait;
+    use \OwenIt\Auditing\Auditable;
+    use BlameableTrait;
    use SoftDeletes;
 
     /*
