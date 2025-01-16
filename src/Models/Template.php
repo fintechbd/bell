@@ -9,9 +9,9 @@ use OwenIt\Auditing\Contracts\Auditable;
 
 class Template extends BaseModel implements Auditable
 {
-    use \OwenIt\Auditing\Auditable;
     use BlameableTrait;
-   use SoftDeletes;
+    use \OwenIt\Auditing\Auditable;
+    use SoftDeletes;
 
     /*
     |--------------------------------------------------------------------------
@@ -22,8 +22,6 @@ class Template extends BaseModel implements Auditable
     protected $primaryKey = 'id';
 
     protected $guarded = ['id'];
-
-
 
     protected $casts = ['template_data' => 'array', 'restored_at' => 'datetime', 'enabled' => 'bool'];
 

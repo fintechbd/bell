@@ -2,24 +2,19 @@
 
 namespace Fintech\Bell\Services;
 
-
 use Fintech\Bell\Interfaces\TemplateRepository;
 
 /**
  * Class TemplateService
- * @package Fintech\Bell\Services
- *
  */
 class TemplateService
 {
     /**
      * TemplateService constructor.
-     * @param TemplateRepository $templateRepository
      */
-    public function __construct(private readonly TemplateRepository $templateRepository) { }
+    public function __construct(private readonly TemplateRepository $templateRepository) {}
 
     /**
-     * @param array $filters
      * @return mixed
      */
     public function list(array $filters = [])
