@@ -74,21 +74,12 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Notification Model
+    | Template Model
     |--------------------------------------------------------------------------
     |
     | This value will be used to across system where model is needed
     */
-    'notification_model' => \Fintech\Bell\Models\Notification::class,
-
-    /*
-    |--------------------------------------------------------------------------
-    | Notification Model
-    |--------------------------------------------------------------------------
-    |
-    | This value will be used to across system where model is needed
-    */
-    'notification_model' => \Fintech\Bell\Models\Notification::class,
+    'template_model' => \Fintech\Bell\Models\Template::class,
 
     // ** Model Config Point Do not Remove **//
     /*
@@ -100,9 +91,7 @@ return [
     */
 
     'repositories' => [
-        \Fintech\Bell\Interfaces\NotificationRepository::class => \Fintech\Bell\Repositories\Eloquent\NotificationRepository::class,
-
-        \Fintech\Bell\Interfaces\NotificationRepository::class => \Fintech\Bell\Repositories\Eloquent\NotificationRepository::class,
+        \Fintech\Bell\Interfaces\TemplateRepository::class => \Fintech\Bell\Repositories\Eloquent\TemplateRepository::class,
 
         // ** Repository Binding Config Point Do not Remove **//
     ],

@@ -21,6 +21,11 @@ if (Config::get('fintech.bell.enabled')) {
             ->group(function () {
                 Route::get('triggers', AvailableTriggerController::class)
                     ->name('triggers.index');
+
+                Route::apiResource('templates', \Fintech\Bell\Http\Controllers\TemplateController::class);
+                Route::post('templates/{template}/restore', [\Fintech\Bell\Http\Controllers\TemplateController::class, 'restore'])
+                    ->name('templates.restore');
+
                 // DO NOT REMOVE THIS LINE//
             });
     });
