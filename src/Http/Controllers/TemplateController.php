@@ -7,12 +7,12 @@ use Fintech\Core\Exceptions\UpdateOperationException;
 use Fintech\Core\Exceptions\DeleteOperationException;
 use Fintech\Core\Exceptions\RestoreOperationException;
 use Fintech\Bell\Facades\Bell;
-use Fintech\RestApi\Http\Resources\Bell\TemplateControllerResource;
-use Fintech\RestApi\Http\Resources\Bell\TemplateControllerCollection;
-use Fintech\RestApi\Http\Requests\Bell\ImportTemplateControllerRequest;
-use Fintech\RestApi\Http\Requests\Bell\StoreTemplateControllerRequest;
-use Fintech\RestApi\Http\Requests\Bell\UpdateTemplateControllerRequest;
-use Fintech\RestApi\Http\Requests\Bell\IndexTemplateControllerRequest;
+use Fintech\Bell\Http\Resources\TemplateResource;
+use Fintech\Bell\Http\Resources\TemplateCollection;
+use Fintech\Bell\Http\Requests\ImportTemplateRequest;
+use Fintech\Bell\Http\Requests\StoreTemplateRequest;
+use Fintech\Bell\Http\Requests\UpdateTemplateRequest;
+use Fintech\Bell\Http\Requests\IndexTemplateRequest;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
@@ -37,17 +37,17 @@ class TemplateController extends Controller
      * *```paginate=false``` returns all resource as list not pagination*
      * @lrd:end
      *
-     * @param IndexTemplateControllerRequest $request
-     * @return TemplateControllerCollection|JsonResponse
+     * @param IndexTemplateRequest $request
+     * @return TemplateCollection|JsonResponse
      */
-    public function index(IndexTemplateControllerRequest $request): TemplateControllerCollection|JsonResponse
+    public function index(IndexTemplateRequest $request): TemplateCollection|JsonResponse
     {
         try {
             $inputs = $request->validated();
 
             $templateControllerPaginate = Bell::templateController()->list($inputs);
 
-            return new TemplateControllerCollection($templateControllerPaginate);
+            return new TemplateCollection($templateControllerPaginate);
 
         } catch (Exception $exception) {
 
@@ -60,11 +60,11 @@ class TemplateController extends Controller
      * Create a new *TemplateController* resource in storage.
      * @lrd:end
      *
-     * @param StoreTemplateControllerRequest $request
+     * @param StoreTemplateRequest $request
      * @return JsonResponse
      * @throws StoreOperationException
      */
-    public function store(StoreTemplateControllerRequest $request): JsonResponse
+    public function store(StoreTemplateRequest $request): JsonResponse
     {
         try {
             $inputs = $request->validated();
@@ -92,10 +92,10 @@ class TemplateController extends Controller
      * @lrd:end
      *
      * @param string|int $id
-     * @return TemplateControllerResource|JsonResponse
+     * @return TemplateResource|JsonResponse
      * @throws ModelNotFoundException
      */
-    public function show(string|int $id): TemplateControllerResource|JsonResponse
+    public function show(string|int $id): TemplateResource|JsonResponse
     {
         try {
 
@@ -105,7 +105,7 @@ class TemplateController extends Controller
                 throw (new ModelNotFoundException)->setModel(config('fintech.bell.template_controller_model'), $id);
             }
 
-            return new TemplateControllerResource($templateController);
+            return new TemplateResource($templateController);
 
         } catch (ModelNotFoundException $exception) {
 
@@ -122,13 +122,13 @@ class TemplateController extends Controller
      * Update a specified *TemplateController* resource using id.
      * @lrd:end
      *
-     * @param UpdateTemplateControllerRequest $request
+     * @param UpdateTemplateRequest $request
      * @param string|int $id
      * @return JsonResponse
      * @throws ModelNotFoundException
      * @throws UpdateOperationException
      */
-    public function update(UpdateTemplateControllerRequest $request, string|int $id): JsonResponse
+    public function update(UpdateTemplateRequest $request, string|int $id): JsonResponse
     {
         try {
 
@@ -237,10 +237,10 @@ class TemplateController extends Controller
      *
      * @lrd:end
      *
-     * @param IndexTemplateControllerRequest $request
+     * @param IndexTemplateRequest $request
      * @return JsonResponse
      */
-    public function export(IndexTemplateControllerRequest $request): JsonResponse
+    public function export(IndexTemplateRequest $request): JsonResponse
     {
         try {
             $inputs = $request->validated();
@@ -262,17 +262,17 @@ class TemplateController extends Controller
      *
      * @lrd:end
      *
-     * @param ImportTemplateControllerRequest $request
-     * @return TemplateControllerCollection|JsonResponse
+     * @param ImportTemplateRequest $request
+     * @return TemplateCollection|JsonResponse
      */
-    public function import(ImportTemplateControllerRequest $request): JsonResponse
+    public function import(ImportTemplateRequest $request): JsonResponse
     {
         try {
             $inputs = $request->validated();
 
             $templateControllerPaginate = Bell::templateController()->list($inputs);
 
-            return new TemplateControllerCollection($templateControllerPaginate);
+            return new TemplateCollection($templateControllerPaginate);
 
         } catch (Exception $exception) {
 
