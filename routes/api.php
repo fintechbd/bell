@@ -1,5 +1,6 @@
 <?php
 
+use Fintech\Bell\Http\Controllers\TemplateController;
 use Fintech\Bell\Http\Controllers\TriggerController;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Route;
@@ -20,15 +21,16 @@ if (Config::get('fintech.bell.enabled')) {
             ->middleware(config('fintech.auth.middleware'))
             ->group(function () {
 
-                Route::apiResource('triggers', \Fintech\Bell\Http\Controllers\TriggerController::class)
-                    ->only(['index', 'show'])->where(['trigger' => 'uuid']);
+                Route::apiResource('triggers', TriggerController::class)
+                    ->only(['index', 'show'])
+                    ->where(['trigger' => UUID_PATTERN]);
 
-                Route::get('triggers/sync', [\Fintech\Bell\Http\Controllers\TriggerController::class, 'sync'])
+                Route::get('triggers/sync', [TriggerController::class, 'sync'])
                     ->name('triggers.sync');
 
-                Route::apiResource('templates', \Fintech\Bell\Http\Controllers\TemplateController::class);
+                Route::apiResource('templates', TemplateController::class);
 
-                Route::post('templates/{template}/restore', [\Fintech\Bell\Http\Controllers\TemplateController::class, 'restore'])
+                Route::post('templates/{template}/restore', [TemplateController::class, 'restore'])
                     ->name('templates.restore');
 
                 // DO NOT REMOVE THIS LINE//
