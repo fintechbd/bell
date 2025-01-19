@@ -23,17 +23,17 @@ class TriggerController extends Controller
      */
     public function index(Request $request): TriggerCollection|JsonResponse
     {
-//        try {
-            $inputs = $request->all();
+        //        try {
+        $inputs = $request->all();
 
-            $triggers = Bell::trigger()->list($inputs);
+        $triggers = Bell::trigger()->list($inputs);
 
-            return new TriggerCollection($triggers);
+        return new TriggerCollection($triggers);
 
-//        } catch (Exception $exception) {
-//
-//            return response()->failed($exception);
-//        }
+        //        } catch (Exception $exception) {
+        //
+        //            return response()->failed($exception);
+        //        }
     }
 
     /**
