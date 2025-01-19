@@ -1,6 +1,6 @@
 <?php
 
-use Fintech\Bell\Http\Controllers\AvailableTriggerController;
+use Fintech\Bell\Http\Controllers\TriggerController;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Route;
 
@@ -19,10 +19,15 @@ if (Config::get('fintech.bell.enabled')) {
         Route::prefix('bell')->name('bell.')
             ->middleware(config('fintech.auth.middleware'))
             ->group(function () {
-                Route::get('triggers', AvailableTriggerController::class)
-                    ->name('triggers.index');
+
+                Route::apiResource('triggers', \Fintech\Bell\Http\Controllers\TriggerController::class)
+                    ->only(['index', 'show'])->where(['trigger' => 'uuid']);
+
+                Route::get('triggers/sync', [\Fintech\Bell\Http\Controllers\TriggerController::class, 'sync'])
+                    ->name('triggers.sync');
 
                 Route::apiResource('templates', \Fintech\Bell\Http\Controllers\TemplateController::class);
+
                 Route::post('templates/{template}/restore', [\Fintech\Bell\Http\Controllers\TemplateController::class, 'restore'])
                     ->name('templates.restore');
 
