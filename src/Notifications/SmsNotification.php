@@ -3,19 +3,24 @@
 namespace Fintech\Bell\Notifications;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Laraflow\Sms\Exceptions\DriverNotFoundException;
+use Laraflow\Sms\SmsMessage;
 
-class SmsNotification extends Notification
+class SmsNotification extends Notification implements ShouldQueue
 {
     use Queueable;
+
+    public string $message;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct()
+    public function __construct(public object $template, public array $replacements = [])
     {
-        //
+
     }
 
     /**
@@ -25,29 +30,29 @@ class SmsNotification extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['mail'];
+        return ['sms'];
     }
 
     /**
-     * Get the mail representation of the notification.
+     * Get the SMS representation of the notification.
      */
-    public function toMail(object $notifiable): MailMessage
+    /**
+     * @throws DriverNotFoundException
+     * @throws \ErrorException
+     */
+    public function toSms(object $notifiable): SmsMessage
     {
-        return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+        return (new SmsMessage)
+            ->from(decide_sms_from_name($this->ro))
+            ->message(strtr($this->template->content['message'], $this->replacements));
     }
 
-    /**
-     * Get the array representation of the notification.
-     *
-     * @return array<string, mixed>
-     */
-    public function toArray(object $notifiable): array
+    private function recipients()
     {
-        return [
-            //
-        ];
+        $recipients = $this->template->recipients;
+
+        if (empty($recipients)) {
+            throw new \ErrorException("Recipients is empty");
+        }
     }
 }

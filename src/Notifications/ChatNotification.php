@@ -3,17 +3,18 @@
 namespace Fintech\Bell\Notifications;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class ChatNotification extends Notification
+class ChatNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct()
+    public function __construct(public object $template, public array $replacements = [])
     {
         //
     }

@@ -28,7 +28,7 @@ class TemplateRepository extends EloquentRepository implements InterfacesTemplat
         $query = $this->model->newQuery();
 
         // Searching
-        if (! empty($filters['search'])) {
+        if (!empty($filters['search'])) {
             if (is_numeric($filters['search'])) {
                 $query->where($this->model->getKeyName(), 'like', "%{$filters['search']}%");
             } else {
@@ -40,6 +40,14 @@ class TemplateRepository extends EloquentRepository implements InterfacesTemplat
         // Display Trashed
         if (isset($filters['trashed']) && $filters['trashed'] === true) {
             $query->onlyTrashed();
+        }
+
+        if (isset($filters['enabled'])) {
+            $query->where('enabled', $filters['enabled']);
+        }
+
+        if (isset($filters['trigger_code'])) {
+            $query->where('trigger_code', "=", $filters['trigger_code']);
         }
 
         // Handle Sorting
