@@ -37,9 +37,7 @@ class StoreTemplateRequest extends FormRequest
 
         if ($this->input('medium') == 'sms') {
             $rules['content.message'] = ['required', 'string', 'max:255'];
-        }
-
-        else if ($this->input('medium') == 'email') {
+        } elseif ($this->input('medium') == 'email') {
             $rules['content'] = ['required', 'array'];
             $rules['content.subject'] = ['required', 'string', 'max:255'];
             $rules['content.body'] = ['required', 'string'];

@@ -4,7 +4,6 @@ namespace Fintech\Bell\Notifications;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Laraflow\Sms\Exceptions\DriverNotFoundException;
 use Laraflow\Sms\SmsMessage;
@@ -18,10 +17,7 @@ class SmsNotification extends Notification implements ShouldQueue
     /**
      * Create a new notification instance.
      */
-    public function __construct(public object $template, public array $replacements = [])
-    {
-
-    }
+    public function __construct(public object $template, public array $replacements = []) {}
 
     /**
      * Get the notification's delivery channels.
@@ -52,7 +48,7 @@ class SmsNotification extends Notification implements ShouldQueue
         $recipients = $this->template->recipients;
 
         if (empty($recipients)) {
-            throw new \ErrorException("Recipients is empty");
+            throw new \ErrorException('Recipients is empty');
         }
     }
 }

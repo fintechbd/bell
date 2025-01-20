@@ -67,7 +67,7 @@ class TemplateController extends Controller
 
             $template = Bell::template()->create($inputs);
 
-            if (!$template) {
+            if (! $template) {
                 throw (new StoreOperationException)->setModel(config('fintech.bell.template_controller_model'));
             }
 
@@ -97,7 +97,7 @@ class TemplateController extends Controller
 
             $template = Bell::template()->find($id);
 
-            if (!$template) {
+            if (! $template) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.bell.template_controller_model'), $id);
             }
 
@@ -128,13 +128,13 @@ class TemplateController extends Controller
 
             $template = Bell::template()->find($id);
 
-            if (!$template) {
+            if (! $template) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.bell.template_controller_model'), $id);
             }
 
             $inputs = $request->validated();
 
-            if (!Bell::template()->update($id, $inputs)) {
+            if (! Bell::template()->update($id, $inputs)) {
 
                 throw (new UpdateOperationException)->setModel(config('fintech.bell.template_controller_model'), $id);
             }
@@ -168,11 +168,11 @@ class TemplateController extends Controller
 
             $template = Bell::template()->find($id);
 
-            if (!$template) {
+            if (! $template) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.bell.template_controller_model'), $id);
             }
 
-            if (!Bell::template()->destroy($id)) {
+            if (! Bell::template()->destroy($id)) {
 
                 throw (new DeleteOperationException)->setModel(config('fintech.bell.template_controller_model'), $id);
             }
@@ -204,11 +204,11 @@ class TemplateController extends Controller
 
             $template = Bell::template()->find($id, true);
 
-            if (!$template) {
+            if (! $template) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.bell.template_controller_model'), $id);
             }
 
-            if (!Bell::template()->restore($id)) {
+            if (! Bell::template()->restore($id)) {
 
                 throw (new RestoreOperationException)->setModel(config('fintech.bell.template_controller_model'), $id);
             }

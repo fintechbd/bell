@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static \Illuminate\Contracts\Pagination\Paginator|\Illuminate\Support\Collection|TriggerService trigger(array $filters = null)*                                                                                                                                                    @method static \Fintech\Bell\Services\NotificationService notification()
  * @method static \Illuminate\Contracts\Pagination\Paginator|\Illuminate\Support\Collection|TemplateService template(array $filters = null)*                                                                                                                                                    @method static \Fintech\Bell\Services\NotificationService notification()
  * @method static \Fintech\Bell\Services\TemplateService push()
- *                                                                  // Crud Service Method Point Do not Remove //
+ *                                                              // Crud Service Method Point Do not Remove //
  *
  * @see \Fintech\Bell\Bell
  */

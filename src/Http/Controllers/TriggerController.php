@@ -50,7 +50,7 @@ class TriggerController extends Controller
 
             $trigger = Bell::trigger()->find($id);
 
-            if (!$trigger) {
+            if (! $trigger) {
                 throw (new ModelNotFoundException)->setModel('Trigger', $id);
             }
 
