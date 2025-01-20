@@ -2,7 +2,9 @@
 
 namespace Fintech\Bell\Models;
 
+use Fintech\Bell\Facades\Bell;
 use Fintech\Core\Abstracts\BaseModel;
+use Fintech\Core\Enums\Bell\NotificationMedium;
 use Fintech\Core\Traits\Audits\BlameableTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
@@ -23,7 +25,14 @@ class Template extends BaseModel implements Auditable
 
     protected $guarded = ['id'];
 
-    protected $casts = ['template_data' => 'array', 'restored_at' => 'datetime', 'enabled' => 'bool'];
+    protected $casts = [
+        'template_data' => 'array',
+        'content' => 'array',
+        'recipients' => 'array',
+        'restored_at' => 'datetime',
+        'enabled' => 'bool',
+        'medium' => NotificationMedium::class,
+    ];
 
     protected $hidden = ['creator_id', 'editor_id', 'destroyer_id', 'restorer_id'];
 
@@ -72,6 +81,12 @@ class Template extends BaseModel implements Auditable
         }
 
         return $links;
+    }
+
+    public function getTriggerNameAttribute()
+    {
+        return Bell::trigger()->find($this->trigger_code);
+
     }
 
     /*

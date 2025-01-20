@@ -2,7 +2,9 @@
 
 namespace Fintech\Bell\Http\Requests;
 
+use Fintech\Core\Enums\Bell\NotificationMedium;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreTemplateRequest extends FormRequest
 {
@@ -21,9 +23,29 @@ class StoreTemplateRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            //
+        $rules = [
+            'trigger_code' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255'],
+            'medium' => ['required', 'string', Rule::in(NotificationMedium::values())],
+            'content' => ['required'],
+            'enabled' => ['required', 'boolean'],
+            'recipients' => ['array', 'required'],
+            'recipients.admin' => ['boolean', 'required'],
+            'recipients.customer' => ['boolean', 'required'],
+            'recipients.extra' => ['array', 'required'],
         ];
+
+        if ($this->input('medium') == 'sms') {
+            $rules['content.message'] = ['required', 'string', 'max:255'];
+        }
+
+        else if ($this->input('medium') == 'email') {
+            $rules['content'] = ['required', 'array'];
+            $rules['content.subject'] = ['required', 'string', 'max:255'];
+            $rules['content.body'] = ['required', 'string'];
+        }
+
+        return $rules;
     }
 
     /**

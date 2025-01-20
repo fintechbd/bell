@@ -16,7 +16,21 @@ class TemplateCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return $this->collection->map(function ($template) {
+            return [
+                'id' => $template->getKey(),
+                'trigger_code' => $template->trigger_code,
+                'name' => $template->name,
+                'medium' => $template->medium,
+                'trigger_name' => $template->trigger_name,
+                'content' => $template->content,
+                'enabled' => $template->enabled,
+                'template_data' => $template->template_data,
+                'recipients' => $template->recipients,
+                'created_at' => $template->created_at,
+                'updated_at' => $template->updated_at,
+            ];
+        })->toArray();
     }
 
     /**

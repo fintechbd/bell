@@ -23,17 +23,17 @@ class TriggerController extends Controller
      */
     public function index(Request $request): TriggerCollection|JsonResponse
     {
-//        try {
+        try {
             $inputs = $request->all();
 
             $triggers = Bell::trigger()->list($inputs);
 
             return new TriggerCollection($triggers);
 
-//        } catch (Exception $exception) {
-//
-//            return response()->failed($exception);
-//        }
+        } catch (Exception $exception) {
+
+            return response()->failed($exception);
+        }
     }
 
     /**
@@ -50,7 +50,7 @@ class TriggerController extends Controller
 
             $trigger = Bell::trigger()->find($id);
 
-            if (! $trigger) {
+            if (!$trigger) {
                 throw (new ModelNotFoundException)->setModel('Trigger', $id);
             }
 
