@@ -66,7 +66,7 @@ class BellServiceProvider extends ServiceProvider
         $this->extendNotificationChannels();
     }
 
-    private function extendNotificationChannels()
+    private function extendNotificationChannels(): void
     {
         Notification::extend('push', function ($app) {
             return $app->make(PushChannel::class);
