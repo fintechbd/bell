@@ -37,8 +37,7 @@ class EmailNotification extends Notification implements ShouldQueue
         return (new MailMessage)
             ->error()
             ->subject(strtr($this->template->content['subject'] ?? 'Email Subject', $this->replacements))
-            ->line(strtr($this->template->content['body'] ?? 'Email body', $this->replacements))
-            ;
+            ->line(strtr($this->template->content['body'] ?? 'Email body', $this->replacements));
 
     }
 }
