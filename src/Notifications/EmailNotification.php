@@ -41,7 +41,7 @@ class EmailNotification extends Notification implements ShouldQueue
                 'phone' => '+8801689553434',
                 'email' => config('mail.from.address'),
                 'website' => 'www.lebupay.com',
-                'content' => strtr($this->template->content['body'] ?? 'Email body', $this->replacements)
+                'content' => strtr($this->template->content['body'] ?? 'Email body', $this->replacements),
             ]);
     }
 }
