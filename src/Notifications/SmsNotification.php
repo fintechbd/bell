@@ -33,22 +33,11 @@ class SmsNotification extends Notification implements ShouldQueue
      * Get the SMS representation of the notification.
      */
     /**
-     * @throws DriverNotFoundException
-     * @throws \ErrorException
      */
     public function toSms(object $notifiable): SmsMessage
     {
         return (new SmsMessage)
-            ->from(decide_sms_from_name($this->ro))
+            ->from(decide_sms_from_name($notifiable->mobile))
             ->message(strtr($this->template->content['message'], $this->replacements));
-    }
-
-    private function recipients()
-    {
-        $recipients = $this->template->recipients;
-
-        if (empty($recipients)) {
-            throw new \ErrorException('Recipients is empty');
-        }
     }
 }
