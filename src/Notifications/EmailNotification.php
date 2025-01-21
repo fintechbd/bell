@@ -35,8 +35,10 @@ class EmailNotification extends Notification implements ShouldQueue
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->line('The introduction to the notification.')
-            ->action('Notification Action', url('/'))
-            ->line('Thank you for using our application!');
+            ->error()
+            ->subject(strtr($this->template->content['subject'] ?? 'Email Subject', $this->replacements))
+            ->line(strtr($this->template->content['body'] ?? 'Email body', $this->replacements))
+            ;
+
     }
 }
