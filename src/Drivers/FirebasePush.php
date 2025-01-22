@@ -7,7 +7,6 @@ use Fintech\Bell\Abstracts\PushDriver;
 use Fintech\Bell\Messages\PushMessage;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Storage;
 
 /**
  * FCM (Firebase Cloud Messaging)
@@ -31,12 +30,12 @@ class FirebasePush extends PushDriver
             'url' => null,
             'token' => null,
             'expired_at' => null,
-            'json' => null
+            'json' => null,
         ]);
 
         $json_path = base_path($this->config['json']);
 
-        if (!is_file($json_path)) {
+        if (! is_file($json_path)) {
             throw new FileNotFoundException("File not found at {$json_path}");
         }
 
@@ -50,7 +49,7 @@ class FirebasePush extends PushDriver
         $expiredAt = $this->credentials['expired_at'] ?? null;
 
         if ($expiredAt == null || now()->gt(CarbonImmutable::parse($expiredAt))) {
-            //Update Token
+            // Update Token
 
         }
     }
@@ -62,14 +61,14 @@ class FirebasePush extends PushDriver
         $payload = [
             'message' => [
                 'token' => 'token',
-                ...$message->getPayload()
-            ]
+                ...$message->getPayload(),
+            ],
         ];
 
         $payloadJson = json_encode($payload);
 
         if (strlen($payloadJson) > 4096) {
-            throw new \OverflowException("Payload size is " (strlen($payloadJson) / 1024) . "KB is over the 4KB limit.");
+            throw new \OverflowException('Payload size is ' (strlen($payloadJson) / 1024).'KB is over the 4KB limit.');
         }
 
         $response = Http::withoutVerifying()
