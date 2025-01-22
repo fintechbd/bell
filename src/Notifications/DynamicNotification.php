@@ -6,17 +6,19 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Laraflow\Sms\SmsMessage;
 
-class EmailNotification extends Notification implements ShouldQueue
+class DynamicNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
     /**
      * Create a new notification instance.
+     * @param object $template
+     * @param array $replacements
      */
     public function __construct(public object $template, public array $replacements = [])
     {
-        //
     }
 
     /**
@@ -26,11 +28,11 @@ class EmailNotification extends Notification implements ShouldQueue
      */
     public function via(object $notifiable): array
     {
-        return ['mail'];
+        return (array)($this->template->medium ?? 'database');
     }
 
     /**
-     * Get the mail representation of the notification.
+     * Get the Mail representation of the notification.
      */
     public function toMail(object $notifiable): MailMessage
     {
@@ -43,5 +45,30 @@ class EmailNotification extends Notification implements ShouldQueue
                 'content' => strtr($this->template->content['body'] ?? 'Email body', $this->replacements)
             ])
             ->priority(2);
+    }
+
+
+    /**
+     * Get the SMS representation of the notification.
+     */
+    /**
+     */
+    public function toSms(object $notifiable): SmsMessage
+    {
+        return (new SmsMessage)
+            ->from(decide_sms_from_name($notifiable->mobile))
+            ->message(strtr($this->template->content['message'], $this->replacements));
+    }
+
+    /**
+     * Get the array representation of the notification.
+     *
+     * @return array<string, mixed>
+     */
+    public function toArray(object $notifiable): array
+    {
+        return [
+            //
+        ];
     }
 }

@@ -3,7 +3,7 @@
 namespace Fintech\Bell\Services;
 
 use Fintech\Core\Attributes\ListenByTrigger;
-use Fintech\Core\Listeners\TriggerNotification;
+use Fintech\Core\Listeners\TriggerListener;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
@@ -59,7 +59,7 @@ class TriggerService
             $triggers = collect();
 
             foreach ($eventDispatcher->getRawListeners() as $event => $listeners) {
-                if (! in_array(TriggerNotification::class, $listeners)) {
+                if (! in_array(TriggerListener::class, $listeners)) {
                     continue;
                 }
 
