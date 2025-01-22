@@ -34,22 +34,26 @@ class StoreTemplateRequest extends FormRequest
             'recipients.agent' => ['boolean', 'required'],
             'recipients.customer' => ['boolean', 'required'],
             'recipients.extra' => ['array', 'required'],
+            'recipients.extra.*' => ['nullable', 'string'],
         ];
 
         if ($this->input('medium') == 'sms') {
-            $rules['content.message'] = ['required', 'string', 'max:255'];
+            $rules['content.body'] = ['required', 'string', 'max:255'];
+            $rules['recipients.extra.*'][] = 'mobile';
         } elseif ($this->input('medium') == 'mail') {
-            $rules['content.subject'] = ['required', 'string', 'max:255'];
+            $rules['content.title'] = ['required', 'string', 'max:255'];
             $rules['content.body'] = ['required', 'string'];
+            $rules['recipients.extra.*'][] = 'email:rfc,dns';
         } elseif ($this->input('medium') == 'push') {
             $rules['content.type'] = ['required', 'string', 'max:255'];
             $rules['content.title'] = ['required', 'string', 'max:255'];
             $rules['content.body'] = ['required', 'string'];
             $rules['content.image'] = ['required', 'string'];
-        } else if ($this->input('medium') == 'chat'){
-            $rules['content.message'] = ['required', 'string'];
+        } else if ($this->input('medium') == 'chat') {
+            $rules['content.body'] = ['required', 'string'];
             $rules['content.type'] = ['required', 'string', 'max:255'];
             $rules['content.image'] = ['required', 'string'];
+            $rules['recipients.extra.*'][] = 'integer';
         }
 
         return $rules;

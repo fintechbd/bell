@@ -37,7 +37,7 @@ class DynamicNotification extends Notification implements ShouldQueue
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject(strtr($this->template->content['subject'] ?? 'Email Subject', $this->replacements))
+            ->subject(strtr($this->template->content['title'] ?? 'Email Subject', $this->replacements))
             ->view('bell::email', [
                 'phone' => '+8801689553434',
                 'email' => config('mail.from.address'),
@@ -57,7 +57,7 @@ class DynamicNotification extends Notification implements ShouldQueue
     {
         return (new SmsMessage)
             ->from(decide_sms_from_name($notifiable->mobile))
-            ->message(strtr($this->template->content['message'], $this->replacements));
+            ->message(strtr($this->template->content['body'], $this->replacements));
     }
 
     /**
