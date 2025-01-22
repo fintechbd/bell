@@ -15,7 +15,7 @@ class DynamicNotification extends Notification implements ShouldQueue
     /**
      * Create a new notification instance.
      */
-    public function __construct(public object $template, public array $replacements = []) {}
+    public function __construct(public string $channel, public array $content, public array $replacements = []) {}
 
     /**
      * Get the notification's delivery channels.
@@ -24,7 +24,7 @@ class DynamicNotification extends Notification implements ShouldQueue
      */
     public function via(object $notifiable): array
     {
-        return (array) ($this->template->medium ?? 'database');
+        return (array) ($this->channel ?? 'database');
     }
 
     /**
@@ -33,12 +33,12 @@ class DynamicNotification extends Notification implements ShouldQueue
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject(strtr($this->template->content['title'] ?? 'Email Subject', $this->replacements))
+            ->subject(strtr($this->content['title'] ?? 'Email Subject', $this->replacements))
             ->view('bell::email', [
                 'phone' => '+8801689553434',
                 'email' => config('mail.from.address'),
                 'website' => 'www.lebupay.com',
-                'content' => strtr($this->template->content['body'] ?? 'Email body', $this->replacements),
+                'content' => strtr($this->content['body'] ?? 'Email body', $this->replacements),
             ])
             ->priority(2);
     }
@@ -49,8 +49,20 @@ class DynamicNotification extends Notification implements ShouldQueue
     public function toSms(object $notifiable): SmsMessage
     {
         return (new SmsMessage)
-            ->from(decide_sms_from_name($notifiable->mobile))
-            ->message(strtr($this->template->content['body'], $this->replacements));
+            ->from(decide_sms_from_name($notifiable->routeNotificationFor($this->channel)))
+            ->message(strtr($this->content['body'], $this->replacements));
+    }
+
+    /**
+     * Get the array representation of the notification.
+     *
+     * @return array<string, mixed>
+     */
+    public function toPush(object $notifiable): array
+    {
+        return [
+            //
+        ];
     }
 
     /**
