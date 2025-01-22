@@ -43,16 +43,16 @@ return [
         'fcm' => [
             'driver' => FirebasePush::class,
             'live' => [
-                'url' => 'https://fcm.googleapis.com/fcm/send',
-                'username' => null,
-                'password' => null,
-                'from' => null,
+                'url' => 'https://fcm.googleapis.com/v1/projects/{project_id}/messages:send',
+                'token' => null,
+                'expired_at' => null,
+                'json' => env('PACKAGE_BELL_FIREBASE_CREDENTIALS'),
             ],
             'sandbox' => [
-                'url' => 'https://fcm.googleapis.com/fcm/send',
-                'username' => null,
-                'password' => null,
-                'from' => null,
+                'url' => 'https://fcm.googleapis.com/v1/projects/{project_id}/messages:send',
+                'token' => null,
+                'expired_at' => null,
+                'json' => env('PACKAGE_BELL_FIREBASE_CREDENTIALS'),
             ],
         ],
         'web' => [

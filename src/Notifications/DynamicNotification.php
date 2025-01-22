@@ -2,6 +2,8 @@
 
 namespace Fintech\Bell\Notifications;
 
+use Fintech\Bell\Messages\PushMessage;
+use Fintech\Core\Enums\Bell\NotificationMedium;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -12,25 +14,16 @@ class DynamicNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    /**
-     * Create a new notification instance.
-     */
-    public function __construct(public string $channel, public array $content, public array $replacements = []) {}
-
-    /**
-     * Get the notification's delivery channels.
-     *
-     * @return array<int, string>
-     */
-    public function via(object $notifiable): array
+    public function __construct(public NotificationMedium $channel, public array $content, public array $replacements = [])
     {
-        return (array) ($this->channel ?? 'database');
     }
 
-    /**
-     * Get the Mail representation of the notification.
-     */
-    public function toMail(object $notifiable): MailMessage
+    public function via(object $notifiable = null): array
+    {
+        return [$this->channel->value];
+    }
+
+    public function toMail(object $notifiable = null): MailMessage
     {
         return (new MailMessage)
             ->subject(strtr($this->content['title'] ?? 'Email Subject', $this->replacements))
@@ -43,34 +36,24 @@ class DynamicNotification extends Notification implements ShouldQueue
             ->priority(2);
     }
 
-    /**
-     * Get the SMS representation of the notification.
-     */
-    public function toSms(object $notifiable): SmsMessage
+    public function toSms(object $notifiable = null): SmsMessage
     {
         return (new SmsMessage)
-            ->from(decide_sms_from_name($notifiable->routeNotificationFor($this->channel)))
-            ->message(strtr($this->content['body'], $this->replacements));
+            ->from(decide_sms_from_name($notifiable->routeNotificationFor($this->channel->value)))
+            ->message(strtr($this->content['body'] ?? 'SMS Body', $this->replacements));
     }
 
-    /**
-     * Get the array representation of the notification.
-     *
-     * @return array<string, mixed>
-     */
-    public function toPush(object $notifiable): array
+    public function toPush(object $notifiable = null): PushMessage
     {
-        return [
-            //
-        ];
+        return (new PushMessage)
+            ->type('general')
+            ->title(strtr($this->content['title'] ?? 'Push Title', $this->replacements))
+            ->body(strtr($this->content['body'] ?? 'Push body', $this->replacements))
+            ->data()
+            ->image();
     }
 
-    /**
-     * Get the array representation of the notification.
-     *
-     * @return array<string, mixed>
-     */
-    public function toArray(object $notifiable): array
+    public function toArray(object $notifiable = null): array
     {
         return [
             //
