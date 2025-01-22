@@ -14,12 +14,8 @@ class DynamicNotification extends Notification implements ShouldQueue
 
     /**
      * Create a new notification instance.
-     * @param object $template
-     * @param array $replacements
      */
-    public function __construct(public object $template, public array $replacements = [])
-    {
-    }
+    public function __construct(public object $template, public array $replacements = []) {}
 
     /**
      * Get the notification's delivery channels.
@@ -28,7 +24,7 @@ class DynamicNotification extends Notification implements ShouldQueue
      */
     public function via(object $notifiable): array
     {
-        return (array)($this->template->medium ?? 'database');
+        return (array) ($this->template->medium ?? 'database');
     }
 
     /**
@@ -42,16 +38,13 @@ class DynamicNotification extends Notification implements ShouldQueue
                 'phone' => '+8801689553434',
                 'email' => config('mail.from.address'),
                 'website' => 'www.lebupay.com',
-                'content' => strtr($this->template->content['body'] ?? 'Email body', $this->replacements)
+                'content' => strtr($this->template->content['body'] ?? 'Email body', $this->replacements),
             ])
             ->priority(2);
     }
 
-
     /**
      * Get the SMS representation of the notification.
-     */
-    /**
      */
     public function toSms(object $notifiable): SmsMessage
     {

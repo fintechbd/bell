@@ -49,7 +49,7 @@ class StoreTemplateRequest extends FormRequest
             $rules['content.title'] = ['required', 'string', 'max:255'];
             $rules['content.body'] = ['required', 'string'];
             $rules['content.image'] = ['required', 'string'];
-        } else if ($this->input('medium') == 'chat') {
+        } elseif ($this->input('medium') == 'chat') {
             $rules['content.body'] = ['required', 'string'];
             $rules['content.type'] = ['required', 'string', 'max:255'];
             $rules['content.image'] = ['required', 'string'];

@@ -59,7 +59,7 @@ class TriggerService
             $triggers = collect();
 
             foreach ($eventDispatcher->getRawListeners() as $event => $listeners) {
-                if (!in_array(TriggerListener::class, $listeners)) {
+                if (! in_array(TriggerListener::class, $listeners)) {
                     continue;
                 }
 
@@ -77,7 +77,7 @@ class TriggerService
                     'code' => $event,
                     'description' => $triggerInfo->description(),
                     'enabled' => $triggerInfo->enabled(),
-                    'variables' => array_map(fn($variable) => ['name' => $variable->name(), 'description' => $variable->description()], $triggerInfo->variables()),
+                    'variables' => array_map(fn ($variable) => ['name' => $variable->name(), 'description' => $variable->description()], $triggerInfo->variables()),
                     'recipients' => [
                         [
                             'name' => 'Admin',
@@ -89,7 +89,7 @@ class TriggerService
                             'description' => 'Business Customer/User',
                             'enabled' => true,
                         ],
-                    ]
+                    ],
                 ]);
             }
 
