@@ -33,7 +33,7 @@ class StoreTemplateRequest extends FormRequest
             'recipients.admin' => ['boolean', 'required'],
             'recipients.agent' => ['boolean', 'required'],
             'recipients.customer' => ['boolean', 'required'],
-            'recipients.extra' => ['array', 'required'],
+            'recipients.extra' => ['array'],
             'recipients.extra.*' => ['nullable', 'string'],
         ];
 
