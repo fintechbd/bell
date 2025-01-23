@@ -10,18 +10,18 @@ class PushMessage
             'title' => null,
             'type' => null,
             'body' => null,
-            'image' => null
+            'image' => null,
         ],
         'data' => [
             'title' => null,
             'type' => null,
             'body' => null,
             'image' => null,
-            'data' => []
-        ]
+            'data' => [],
+        ],
     ];
 
-    public function getPayload(string $key = null): mixed
+    public function getPayload(?string $key = null): mixed
     {
         if ($key != null) {
             return data_get($this->payload, $key);

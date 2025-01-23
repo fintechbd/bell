@@ -26,8 +26,8 @@ class PushChannel
      */
     public function send(object $notifiable, Notification $notification): void
     {
-        if (!method_exists($notification, 'toPush')) {
-            throw new BadMethodCallException(get_class($notification) . " notification is missing the toPush(?object $notifiable = null): PushMessage method.");
+        if (! method_exists($notification, 'toPush')) {
+            throw new BadMethodCallException(get_class($notification)." notification is missing the toPush(?object $notifiable = null): PushMessage method.");
         }
 
         try {
@@ -36,8 +36,8 @@ class PushChannel
              */
             $pushMessage = $notification->toPush($notifiable);
 
-            if (!$to = $notifiable->routeNotificationFor('push', $notification)) {
-                throw new BadMethodCallException(get_class($notifiable) . " notifiable is missing the `routeNotificationForPush(object $notifiable): string` method.");
+            if (! $to = $notifiable->routeNotificationFor('push', $notification)) {
+                throw new BadMethodCallException(get_class($notifiable)." notifiable is missing the `routeNotificationForPush(object $notifiable): string` method.");
             }
 
             $pushMessage->token($to);
