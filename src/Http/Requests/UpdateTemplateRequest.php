@@ -48,11 +48,11 @@ class UpdateTemplateRequest extends FormRequest
             $rules['content.type'] = ['required', 'string', 'max:255'];
             $rules['content.title'] = ['required', 'string', 'max:255'];
             $rules['content.body'] = ['required', 'string'];
-            $rules['content.image'] = ['required', 'string'];
+            $rules['content.image'] = ['nullable', 'string'];
         } elseif ($this->input('medium') == 'chat') {
             $rules['content.body'] = ['required', 'string'];
             $rules['content.type'] = ['required', 'string', 'max:255'];
-            $rules['content.image'] = ['required', 'string'];
+            $rules['content.image'] = ['nullable', 'string'];
             $rules['recipients.extra.*'][] = 'integer';
         }
 
