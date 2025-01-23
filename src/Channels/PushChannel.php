@@ -28,6 +28,7 @@ class PushChannel
 
     /**
      * Send the given notification.
+     *
      * @throws Exception
      * @throws BadMethodCallException
      */
