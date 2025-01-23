@@ -3,8 +3,11 @@
 namespace Fintech\Bell\Channels;
 
 use BadMethodCallException;
+use Exception;
+use Fintech\Bell\Abstracts\PushDriver;
 use Fintech\Bell\Facades\Bell;
 use Fintech\Bell\Messages\PushMessage;
+use Illuminate\Http\Client\Response;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
@@ -12,9 +15,11 @@ use Illuminate\Support\Facades\Log;
 class PushChannel
 {
     /**
-     * @var \Fintech\Bell\Abstracts\PushDriver
+     * @var PushDriver
      */
     private $driver;
+
+    private Response $response;
 
     public function __construct()
     {
@@ -23,6 +28,8 @@ class PushChannel
 
     /**
      * Send the given notification.
+     * @throws Exception
+     * @throws BadMethodCallException
      */
     public function send(object $notifiable, Notification $notification): void
     {
@@ -45,6 +52,8 @@ class PushChannel
             $this->driver->validate($pushMessage);
 
             $this->response = $this->driver->send($pushMessage);
+
+            logger("Push message sent to {$to}", [$this->response->json()]);
 
         } catch (Exception $exception) {
             (App::isProduction())

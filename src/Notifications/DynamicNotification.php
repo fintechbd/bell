@@ -46,9 +46,7 @@ class DynamicNotification extends Notification implements ShouldQueue
         return (new PushMessage)
             ->type('general')
             ->title(strtr($this->content['title'] ?? 'Push Title', $this->replacements))
-            ->body(strtr($this->content['body'] ?? 'Push body', $this->replacements))
-            ->data()
-            ->image();
+            ->body(strtr($this->content['body'] ?? 'Push body', $this->replacements));
     }
 
     public function toArray(?object $notifiable = null): array

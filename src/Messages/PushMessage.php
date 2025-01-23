@@ -4,22 +4,26 @@ namespace Fintech\Bell\Messages;
 
 class PushMessage
 {
-    private array $payload = [
-        'token' => null,
-        'notification' => [
-            'title' => null,
-            'type' => null,
-            'body' => null,
-            'image' => null,
-        ],
-        'data' => [
-            'title' => null,
-            'type' => null,
-            'body' => null,
-            'image' => null,
-            'data' => [],
-        ],
-    ];
+    private array $payload;
+
+    public function __construct()
+    {
+        $this->payload = [
+            'token' => null,
+            'notification' => [
+                'title' => null,
+                'body' => null,
+                'image' => null,
+            ],
+            'data' => [
+                'type' => null,
+                'title' => null,
+                'body' => null,
+                'image' => null,
+                'meta' => null,
+            ],
+        ];
+    }
 
     public function getPayload(?string $key = null): mixed
     {
@@ -32,7 +36,6 @@ class PushMessage
 
     public function type(string $type): self
     {
-        $this->payload['notification']['type'] = $type;
         $this->payload['data']['type'] = $type;
 
         return $this;
@@ -64,9 +67,9 @@ class PushMessage
         return $this;
     }
 
-    public function data(mixed $data = []): self
+    public function with(mixed $data = []): self
     {
-        $this->payload['data']['data'] = $data;
+        $this->payload['data']['meta'] = $data;
 
         return $this;
     }
