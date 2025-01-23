@@ -46,11 +46,20 @@ class FirebasePush extends PushDriver
 
     private function refreshToken(): void
     {
-        $expiredAt = $this->credentials['expired_at'] ?? null;
+        $expiredAt = $this->config['expired_at'] ?? null;
 
         if ($expiredAt == null || now()->gt(CarbonImmutable::parse($expiredAt))) {
-            // Update Token
 
+            $payload = [
+
+            ];
+
+            $response = Http::withoutVerifying()
+                ->timeout(30)
+                ->contentType('application/json')
+                ->withToken($this->config['token'])
+                ->post(str_replace(['{project_id}'], [$this->credentials['project_id']], $this->config['url']), $payload)
+                ->json();
         }
     }
 
