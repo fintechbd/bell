@@ -58,7 +58,6 @@ class UpdateTemplateRequest extends FormRequest
 
         return $rules;
 
-
     }
 
     /**
