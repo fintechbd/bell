@@ -35,7 +35,7 @@ class FirebasePush extends PushDriver
 
         $json_path = base_path($this->config['json']);
 
-        if (! is_file($json_path)) {
+        if (!is_file($json_path)) {
             throw new FileNotFoundException("File not found at {$json_path}");
         }
 
@@ -49,17 +49,31 @@ class FirebasePush extends PushDriver
         $expiredAt = $this->config['expired_at'] ?? null;
 
         if ($expiredAt == null || now()->gt(CarbonImmutable::parse($expiredAt))) {
+            // Create the JWT
+            $header = $this->base64url_encode(json_encode(["alg" => "RS256", "typ" => "JWT"]));
+            $assertion = $this->base64url_encode(json_encode([
+                "iss" => $this->credentials['client_email'],
+                "scope" => 'https://www.googleapis.com/auth/firebase.messaging',
+                "aud" => $this->credentials['token_uri'],
+                "exp" => time() + HOUR,
+                "iat" => time()
+            ]));
+            $signature = '';
+            if (extension_loaded('openssl')) {
+                openssl_sign($header . '.' . $assertion, $signature, $this->credentials['private_key'], 'sha256');
+            }
 
             $payload = [
-
+                'grant_type' => 'urn:ietf:params:oauth:grant-type:jwt-bearer',
+                'assertion' => $header . '.' . $assertion . '.' . $this->base64url_encode($signature)
             ];
 
             $response = Http::withoutVerifying()
-                ->timeout(30)
-                ->contentType('application/json')
-                ->withToken($this->config['token'])
-                ->post(str_replace(['{project_id}'], [$this->credentials['project_id']], $this->config['url']), $payload)
+                ->asForm()
+                ->post($this->credentials['token_uri'], $payload)
                 ->json();
+
+            dd($response);
         }
     }
 
@@ -77,16 +91,20 @@ class FirebasePush extends PushDriver
         $payloadJson = json_encode($payload);
 
         if (strlen($payloadJson) > 4096) {
-            throw new \OverflowException('Payload size is ' (strlen($payloadJson) / 1024).'KB is over the 4KB limit.');
+            throw new \OverflowException('Payload size is ' (strlen($payloadJson) / 1024) . 'KB is over the 4KB limit.');
         }
 
         $response = Http::withoutVerifying()
-            ->timeout(30)
             ->contentType('application/json')
             ->withToken($this->config['token'])
             ->post(str_replace(['{project_id}'], [$this->credentials['project_id']], $this->config['url']), $payload)
             ->json();
 
         logger('PUsh Response', [$response]);
+    }
+
+    private function base64url_encode($data)
+    {
+        return rtrim(strtr(base64_encode($data), '+/', '-_'), '=');
     }
 }

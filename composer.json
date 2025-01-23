@@ -70,5 +70,8 @@
         }
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "suggest": {
+        "ext-openssl": "First SSL verification in production"
+    }
 }
