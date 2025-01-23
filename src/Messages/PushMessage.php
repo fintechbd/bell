@@ -4,10 +4,29 @@ namespace Fintech\Bell\Messages;
 
 class PushMessage
 {
-    private array $payload = [];
+    private array $payload = [
+        'token' => null,
+        'notification' => [
+            'title' => null,
+            'type' => null,
+            'body' => null,
+            'image' => null
+        ],
+        'data' => [
+            'title' => null,
+            'type' => null,
+            'body' => null,
+            'image' => null,
+            'data' => []
+        ]
+    ];
 
-    public function getPayload(): array
+    public function getPayload(string $key = null): mixed
     {
+        if ($key != null) {
+            return data_get($this->payload, $key);
+        }
+
         return $this->payload;
     }
 
@@ -48,6 +67,13 @@ class PushMessage
     public function data(mixed $data = []): self
     {
         $this->payload['data']['data'] = $data;
+
+        return $this;
+    }
+
+    public function token($token): self
+    {
+        $this->payload['token'] = $token;
 
         return $this;
     }

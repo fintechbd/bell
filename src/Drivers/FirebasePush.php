@@ -5,30 +5,31 @@ namespace Fintech\Bell\Drivers;
 use Carbon\CarbonImmutable;
 use Fintech\Bell\Abstracts\PushDriver;
 use Fintech\Bell\Messages\PushMessage;
+use Fintech\Core\Facades\Core;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
+use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
+use InvalidArgumentException;
 
-/**
- * FCM (Firebase Cloud Messaging)
- *
- * @see https://laravel-notification-channels.com/fcm/
- */
 class FirebasePush extends PushDriver
 {
     private array $config = [];
 
     private array $credentials = [];
 
+    private string $mode;
+
     /**
      * @throws FileNotFoundException
+     * @throws \Exception
      */
     public function __construct()
     {
-        $mode = config('fintech.bell.push.mode', 'sandbox');
+        $this->mode = config('fintech.bell.push.mode', 'sandbox');
 
-        $this->config = config("fintech.bell.push.fcm.{$mode}", [
+        $this->config = config("fintech.bell.push.fcm.{$this->mode}", [
             'url' => null,
-            'token' => null,
+            'access_token' => null,
             'expired_at' => null,
             'json' => null,
         ]);
@@ -44,6 +45,9 @@ class FirebasePush extends PushDriver
         $this->refreshToken();
     }
 
+    /**
+     * @throws \Exception
+     */
     private function refreshToken(): void
     {
         $expiredAt = $this->config['expired_at'] ?? null;
@@ -73,19 +77,37 @@ class FirebasePush extends PushDriver
                 ->post($this->credentials['token_uri'], $payload)
                 ->json();
 
-            dd($response);
+            $newExpireAt = now()->addSeconds($response['expires_in'])->format('Y-m-d H:i:s');
+
+            $this->config['expired_at'] = $newExpireAt;
+            $this->config['access_token'] = $response['access_token'];
+
+            Core::setting()->setValue('bell',"push.fcm.{$this->mode}.access_token", $response['access_token']);
+            Core::setting()->setValue('bell',"push.fcm.{$this->mode}.expired_at", $newExpireAt);
         }
     }
 
-    public function send(PushMessage $message): void
+    public function validate(PushMessage $message): void
+    {
+        if (empty($message->getPayload('token'))) {
+            throw new InvalidArgumentException('Push Notification Token is empty.');
+        }
+
+        if (empty($message->getPayload('notification.title'))) {
+            throw new InvalidArgumentException('Push Notification Title is empty.');
+        }
+
+        if (empty($message->getPayload('notification.body'))) {
+            throw new InvalidArgumentException('Push Notification Body is empty.');
+        }
+    }
+
+    public function send(PushMessage $message): Response
     {
         $this->validate($message);
 
         $payload = [
-            'message' => [
-                'token' => 'token',
-                ...$message->getPayload(),
-            ],
+            'message' => $message->getPayload(),
         ];
 
         $payloadJson = json_encode($payload);
@@ -94,16 +116,13 @@ class FirebasePush extends PushDriver
             throw new \OverflowException('Payload size is ' (strlen($payloadJson) / 1024) . 'KB is over the 4KB limit.');
         }
 
-        $response = Http::withoutVerifying()
+        return Http::withoutVerifying()
             ->contentType('application/json')
-            ->withToken($this->config['token'])
-            ->post(str_replace(['{project_id}'], [$this->credentials['project_id']], $this->config['url']), $payload)
-            ->json();
-
-        logger('PUsh Response', [$response]);
+            ->withToken($this->config['access_token'])
+            ->post(str_replace(['{project_id}'], [$this->credentials['project_id']], $this->config['url']), $payload);
     }
 
-    private function base64url_encode($data)
+    private function base64url_encode($data): string
     {
         return rtrim(strtr(base64_encode($data), '+/', '-_'), '=');
     }
