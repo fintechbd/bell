@@ -3,6 +3,7 @@
 namespace Fintech\Bell\Services;
 
 use Fintech\Core\Attributes\ListenByTrigger;
+use Fintech\Core\Facades\Core;
 use Fintech\Core\Listeners\TriggerListener;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\App;
@@ -59,7 +60,7 @@ class TriggerService
             $triggers = collect();
 
             foreach ($eventDispatcher->getRawListeners() as $event => $listeners) {
-                if (! in_array(TriggerListener::class, $listeners)) {
+                if (!in_array(TriggerListener::class, $listeners)) {
                     continue;
                 }
 
@@ -71,13 +72,13 @@ class TriggerService
 
                 $triggerInfo = $reflector->getAttributes(ListenByTrigger::class)[0]->newInstance();
 
-                $triggers->push([
+                $trigger = [
                     'id' => Str::uuid()->toString(),
                     'name' => $triggerInfo->name(),
                     'code' => $event,
                     'description' => $triggerInfo->description(),
                     'enabled' => $triggerInfo->enabled(),
-                    'variables' => array_map(fn ($variable) => ['name' => $variable->name(), 'description' => $variable->description()], $triggerInfo->variables()),
+                    'variables' => array_map(fn($variable) => ['name' => $variable->name(), 'description' => $variable->description()], $triggerInfo->variables()),
                     'recipients' => [
                         [
                             'name' => 'Admin',
@@ -90,11 +91,30 @@ class TriggerService
                             'enabled' => true,
                         ],
                     ],
-                ]);
+                ];
+
+                $trigger['variables'][] = ['name' => '__timestamp__', 'description' => 'Datetime the Trigger/Event occurred'];
+
+                $this->injectIpInfo($trigger);
+
+                $triggers->push($trigger);
             }
 
             return $triggers;
 
         });
+    }
+
+    private function injectIpInfo(array &$trigger): void
+    {
+        if (Core::packageExists('Auth')) {
+            $ipExists = array_filter($trigger['variables'], fn($variable) => $variable['name'] === '__ip__');
+
+            if (!empty($ipExists)) {
+                $trigger['variables'][] = ['name' => '__location__', 'description' => 'User Location based on IP address'];
+                $trigger['variables'][] = ['name' => '__latitude__', 'description' => 'Map latitude based on IP address'];
+                $trigger['variables'][] = ['name' => '__longitude__', 'description' => 'Map longitude based on IP address'];
+            }
+        }
     }
 }
