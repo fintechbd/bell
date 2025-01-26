@@ -23,8 +23,6 @@ class Notification extends BaseModel implements Auditable
 
     protected $guarded = ['id'];
 
-
-
     protected $casts = ['data' => 'array', 'read_at' => 'datetime'];
 
     /*
