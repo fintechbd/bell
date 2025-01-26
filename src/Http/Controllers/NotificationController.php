@@ -3,13 +3,13 @@
 namespace Fintech\Bell\Http\Controllers;
 
 use Exception;
+use Fintech\Bell\Facades\Bell;
+use Fintech\Bell\Http\Requests\ImportNotificationRequest;
+use Fintech\Bell\Http\Requests\IndexNotificationRequest;
 use Fintech\Bell\Http\Resources\NotificationCollection;
 use Fintech\Bell\Http\Resources\NotificationResource;
 use Fintech\Core\Exceptions\DeleteOperationException;
 use Fintech\Core\Exceptions\RestoreOperationException;
-use Fintech\Bell\Facades\Bell;
-use Fintech\Bell\Http\Requests\ImportNotificationRequest;
-use Fintech\Bell\Http\Requests\IndexNotificationRequest;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;

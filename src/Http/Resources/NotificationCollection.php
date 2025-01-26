@@ -26,7 +26,7 @@ class NotificationCollection extends ResourceCollection
                 'read_at' => $notification->read_at,
                 'read_at_formatted' => $notification->read_at?->diffForHumans(),
                 'created_at' => $notification->created_at,
-                'created_at_formatted' => $notification->created_at->diffForHumans()
+                'created_at_formatted' => $notification->created_at->diffForHumans(),
             ];
         })->toArray();
     }
