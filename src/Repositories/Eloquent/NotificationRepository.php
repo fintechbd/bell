@@ -2,22 +2,19 @@
 
 namespace Fintech\Bell\Repositories\Eloquent;
 
-use Fintech\Core\Repositories\EloquentRepository;
 use Fintech\Bell\Interfaces\NotificationRepository as InterfacesNotificationRepository;
+use Fintech\Core\Repositories\EloquentRepository;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
-use InvalidArgumentException;
 
 /**
  * Class NotificationRepository
- * @package Fintech\Bell\Repositories\Eloquent
  */
 class NotificationRepository extends EloquentRepository implements InterfacesNotificationRepository
 {
     public function __construct()
     {
-       parent::__construct(config('fintech.bell.notification_model', \Fintech\Bell\Models\Notification::class));
+        parent::__construct(config('fintech.bell.notification_model', \Fintech\Bell\Models\Notification::class));
     }
 
     /**
@@ -30,7 +27,7 @@ class NotificationRepository extends EloquentRepository implements InterfacesNot
     {
         $query = $this->model->newQuery();
 
-        //Searching
+        // Searching
         if (! empty($filters['search'])) {
             if (is_numeric($filters['search'])) {
                 $query->where($this->model->getKeyName(), 'like', "%{$filters['search']}%");
@@ -52,17 +49,17 @@ class NotificationRepository extends EloquentRepository implements InterfacesNot
             $query->where('notifiable_id', '=', $filters['user_id']);
         }
 
-        //Display Trashed
+        // Display Trashed
         if (isset($filters['trashed']) && $filters['trashed'] === true) {
             $query->whereNotNull('read_at');
         } else {
             $query->whereNull('read_at');
         }
 
-        //Handle Sorting
+        // Handle Sorting
         $query->orderBy($filters['sort'] ?? $this->model->getKeyName(), $filters['dir'] ?? 'asc');
 
-        //Execute Output
+        // Execute Output
         return $this->executeQuery($query, $filters);
 
     }

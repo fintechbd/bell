@@ -1,12 +1,13 @@
 <?php
 
 namespace Fintech\Bell\Http\Controllers;
+
 use Exception;
+use Fintech\Bell\Http\Resources\NotificationCollection;
+use Fintech\Bell\Http\Resources\NotificationResource;
 use Fintech\Core\Exceptions\DeleteOperationException;
 use Fintech\Core\Exceptions\RestoreOperationException;
 use Fintech\Bell\Facades\Bell;
-use Fintech\Bell\Http\Resources\NotificationResource;
-use Fintech\Bell\Http\Resources\NotificationCollection;
 use Fintech\Bell\Http\Requests\ImportNotificationRequest;
 use Fintech\Bell\Http\Requests\IndexNotificationRequest;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -15,15 +16,13 @@ use Illuminate\Routing\Controller;
 
 /**
  * Class NotificationController
- * @package Fintech\Bell\Http\Controllers
  *
  * @lrd:start
  * This class handle create, display, update, delete & restore
  * operation related to Notification
- * @lrd:end
  *
+ * @lrd:end
  */
-
 class NotificationController extends Controller
 {
     /**
@@ -31,10 +30,8 @@ class NotificationController extends Controller
      * Return a listing of the *Notification* resource as collection.
      *
      * *```paginate=false``` returns all resource as list not pagination*
-     * @lrd:end
      *
-     * @param IndexNotificationRequest $request
-     * @return NotificationCollection|JsonResponse
+     * @lrd:end
      */
     public function index(IndexNotificationRequest $request): NotificationCollection|JsonResponse
     {
@@ -58,10 +55,9 @@ class NotificationController extends Controller
     /**
      * @lrd:start
      * Return a specified *Notification* resource found by id.
+     *
      * @lrd:end
      *
-     * @param string|int $id
-     * @return NotificationResource|JsonResponse
      * @throws ModelNotFoundException
      */
     public function show(string|int $id): NotificationResource|JsonResponse
@@ -70,7 +66,7 @@ class NotificationController extends Controller
 
             $notification = Bell::notification()->find($id);
 
-            if (!$notification) {
+            if (! $notification) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.bell.notification_controller_model'), $id);
             }
 
@@ -89,10 +85,11 @@ class NotificationController extends Controller
     /**
      * @lrd:start
      * Soft delete a specified *Notification* resource using id.
+     *
      * @lrd:end
      *
-     * @param string|int $id
      * @return JsonResponse
+     *
      * @throws ModelNotFoundException
      * @throws DeleteOperationException
      */
@@ -102,13 +99,13 @@ class NotificationController extends Controller
 
             $notification = Bell::notification()->find($id);
 
-            if (!$notification) {
+            if (! $notification) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.bell.notification_controller_model'), $id);
             }
 
-            if (!Bell::notification()->destroy($id)) {
+            if (! Bell::notification()->destroy($id)) {
 
-                throw (new DeleteOperationException())->setModel(config('fintech.bell.notification_controller_model'), $id);
+                throw (new DeleteOperationException)->setModel(config('fintech.bell.notification_controller_model'), $id);
             }
 
             return response()->deleted(__('core::messages.resource.deleted', ['model' => 'Notification Controller']));
@@ -127,9 +124,9 @@ class NotificationController extends Controller
      * @lrd:start
      * Restore the specified *Notification* resource from trash.
      * ** ```Soft Delete``` needs to enabled to use this feature**
+     *
      * @lrd:end
      *
-     * @param string|int $id
      * @return JsonResponse
      */
     public function restore(string|int $id)
@@ -138,13 +135,13 @@ class NotificationController extends Controller
 
             $notification = Bell::notification()->find($id, true);
 
-            if (!$notification) {
+            if (! $notification) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.bell.notification_controller_model'), $id);
             }
 
-            if (!Bell::notification()->restore($id)) {
+            if (! Bell::notification()->restore($id)) {
 
-                throw (new RestoreOperationException())->setModel(config('fintech.bell.notification_controller_model'), $id);
+                throw (new RestoreOperationException)->setModel(config('fintech.bell.notification_controller_model'), $id);
             }
 
             return response()->restored(__('core::messages.resource.restored', ['model' => 'Notification Controller']));
@@ -165,9 +162,6 @@ class NotificationController extends Controller
      * After export job is done system will fire  export completed event
      *
      * @lrd:end
-     *
-     * @param IndexNotificationRequest $request
-     * @return JsonResponse
      */
     public function export(IndexNotificationRequest $request): JsonResponse
     {
@@ -191,7 +185,6 @@ class NotificationController extends Controller
      *
      * @lrd:end
      *
-     * @param ImportNotificationRequest $request
      * @return NotificationCollection|JsonResponse
      */
     public function import(ImportNotificationRequest $request): JsonResponse
