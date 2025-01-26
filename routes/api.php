@@ -1,5 +1,6 @@
 <?php
 
+use Fintech\Bell\Http\Controllers\NotificationController;
 use Fintech\Bell\Http\Controllers\TemplateController;
 use Fintech\Bell\Http\Controllers\TriggerController;
 use Illuminate\Support\Facades\Config;
@@ -33,6 +34,8 @@ if (Config::get('fintech.bell.enabled')) {
                 Route::post('templates/{template}/restore', [TemplateController::class, 'restore'])
                     ->name('templates.restore');
 
+                Route::apiResource('notifications', NotificationController::class)
+                    ->only(['index', 'show', 'destroy']);
                 // DO NOT REMOVE THIS LINE//
             });
     });

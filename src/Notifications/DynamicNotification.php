@@ -52,7 +52,10 @@ class DynamicNotification extends Notification implements ShouldQueue
     public function toArray(?object $notifiable = null): array
     {
         return [
-            //
+            'type' => $this->content['type'] ?? 'info',
+            'title' => strtr($this->content['title'] ?? 'Notification Title', $this->replacements),
+            'body' => strtr($this->content['body'] ?? 'Notification body', $this->replacements),
+            'timestamp' => now(),
         ];
     }
 }
