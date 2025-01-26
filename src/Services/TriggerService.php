@@ -60,7 +60,7 @@ class TriggerService
             $triggers = collect();
 
             foreach ($eventDispatcher->getRawListeners() as $event => $listeners) {
-                if (!in_array(TriggerListener::class, $listeners)) {
+                if (! in_array(TriggerListener::class, $listeners)) {
                     continue;
                 }
 
@@ -78,7 +78,7 @@ class TriggerService
                     'code' => $event,
                     'description' => $triggerInfo->description(),
                     'enabled' => $triggerInfo->enabled(),
-                    'variables' => array_map(fn($variable) => ['name' => $variable->name(), 'description' => $variable->description()], $triggerInfo->variables()),
+                    'variables' => array_map(fn ($variable) => ['name' => $variable->name(), 'description' => $variable->description()], $triggerInfo->variables()),
                     'recipients' => [
                         [
                             'name' => 'Admin',
@@ -108,9 +108,9 @@ class TriggerService
     private function injectIpInfo(array &$trigger): void
     {
         if (Core::packageExists('Auth')) {
-            $ipExists = array_filter($trigger['variables'], fn($variable) => $variable['name'] === '__ip__');
+            $ipExists = array_filter($trigger['variables'], fn ($variable) => $variable['name'] === '__ip__');
 
-            if (!empty($ipExists)) {
+            if (! empty($ipExists)) {
                 $trigger['variables'][] = ['name' => '__location__', 'description' => 'User Location based on IP address'];
                 $trigger['variables'][] = ['name' => '__latitude__', 'description' => 'Map latitude based on IP address'];
                 $trigger['variables'][] = ['name' => '__longitude__', 'description' => 'Map longitude based on IP address'];
