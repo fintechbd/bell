@@ -2,8 +2,6 @@
 
 namespace Fintech\Bell\Http\Controllers;
 use Exception;
-use Fintech\Core\Exceptions\StoreOperationException;
-use Fintech\Core\Exceptions\UpdateOperationException;
 use Fintech\Core\Exceptions\DeleteOperationException;
 use Fintech\Core\Exceptions\RestoreOperationException;
 use Fintech\Bell\Facades\Bell;
@@ -45,7 +43,7 @@ class NotificationController extends Controller
 
             $inputs['notifiable_type'] = config('fintech.auth.user_model', \Fintech\Auth\Models\User::class);
             $inputs['user_id'] = $inputs['user_id'] ?? $request->user('sanctum')->getKey();
-            $inputs['type'] = 'database';
+            $inputs['type'] = $inputs['type'] ?? \Fintech\Bell\Notifications\DynamicNotification::class;
 
             $notificationPaginate = Bell::notification()->list($inputs);
 

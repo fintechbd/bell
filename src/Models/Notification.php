@@ -2,14 +2,14 @@
 
 namespace Fintech\Bell\Models;
 
-use Fintech\Core\Traits\AuditableTrait;
 use Fintech\Core\Abstracts\BaseModel;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Fintech\Core\Traits\Audits\BlameableTrait;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Notification extends BaseModel
+class Notification extends BaseModel implements Auditable
 {
-   use AuditableTrait;
-   use SoftDeletes;
+    use BlameableTrait;
+    use \OwenIt\Auditing\Auditable;
 
     /*
     |--------------------------------------------------------------------------
@@ -19,13 +19,13 @@ class Notification extends BaseModel
 
     protected $primaryKey = 'id';
 
+    protected $keyType = 'string';
+
     protected $guarded = ['id'];
 
 
 
-    protected $casts = ['notification_data' => 'array', 'restored_at' => 'datetime', 'enabled' => 'bool'];
-
-    protected $hidden = ['creator_id', 'editor_id', 'destroyer_id', 'restorer_id'];
+    protected $casts = ['data' => 'array', 'read_at' => 'datetime'];
 
     /*
     |--------------------------------------------------------------------------

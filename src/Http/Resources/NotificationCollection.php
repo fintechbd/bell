@@ -16,7 +16,19 @@ class NotificationCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return $this->collection->map(function ($notification) {
+            return [
+                'id' => $notification->getKey(),
+                'type' => $notification->data['type'] ?? null,
+                'title' => $notification->data['title'] ?? null,
+                'body' => $notification->data['body'] ?? null,
+                'image' => $notification->data['image'] ?? null,
+                'read_at' => $notification->read_at,
+                'read_at_formatted' => $notification->read_at?->diffForHumans(),
+                'created_at' => $notification->created_at,
+                'created_at_formatted' => $notification->created_at->diffForHumans()
+            ];
+        })->toArray();
     }
 
     /**

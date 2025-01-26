@@ -88,6 +88,7 @@ return [
 
     'repositories' => [
         \Fintech\Bell\Interfaces\TemplateRepository::class => \Fintech\Bell\Repositories\Eloquent\TemplateRepository::class,
+        \Fintech\Bell\Interfaces\NotificationRepository::class => \Fintech\Bell\Repositories\Eloquent\NotificationRepository::class,
 
         // ** Repository Binding Config Point Do not Remove **//
     ],

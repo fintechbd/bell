@@ -85,8 +85,13 @@ class Template extends BaseModel implements Auditable
 
     public function getTriggerNameAttribute()
     {
-        return Bell::trigger()->find($this->trigger_code);
+        $trigger = Bell::trigger()->find($this->trigger_code);
 
+        if ($trigger != null) {
+            return $trigger['name'];
+        }
+
+        return null;
     }
 
     /*

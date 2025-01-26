@@ -14,6 +14,18 @@ class TemplateResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->getKey(),
+            'trigger_code' => $this->trigger_code,
+            'name' => $this->name,
+            'medium' => $this->medium,
+            'trigger_name' => $this->trigger_name,
+            'content' => $this->content,
+            'enabled' => $this->enabled,
+            'template_data' => $this->template_data,
+            'recipients' => $this->recipients,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+        ];
     }
 }

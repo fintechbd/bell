@@ -54,6 +54,12 @@ class StoreTemplateRequest extends FormRequest
             $rules['content.type'] = ['required', 'string', 'max:255'];
             $rules['content.image'] = ['nullable', 'string'];
             $rules['recipients.extra.*'][] = 'integer';
+        } elseif ($this->input('medium') == 'database') {
+            $rules['content.title'] = ['required', 'string'];
+            $rules['content.body'] = ['required', 'string'];
+            $rules['content.type'] = ['required', 'string', 'max:255'];
+            $rules['content.image'] = ['nullable', 'string'];
+            $rules['recipients.extra.*'][] = 'integer';
         }
 
         return $rules;

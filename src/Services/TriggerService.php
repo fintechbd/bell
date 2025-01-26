@@ -29,7 +29,7 @@ class TriggerService
 
     public function find($code)
     {
-        return $this->triggers->firstWhere('id', $code);
+        return $this->triggers->firstWhere('code', $code);
     }
 
     public function list(array $filters = [])
