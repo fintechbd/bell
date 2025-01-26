@@ -28,9 +28,9 @@ class TriggerService
         $this->loadTriggers();
     }
 
-    public function find($code)
+    public function find($id, string $key = 'id')
     {
-        return $this->triggers->firstWhere('code', $code);
+        return $this->triggers->firstWhere($key, '=', $id);
     }
 
     public function list(array $filters = [])

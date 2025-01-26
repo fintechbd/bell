@@ -9,6 +9,10 @@ use Fintech\Core\Traits\Audits\BlameableTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 
+/**
+ * @property-read string $trigger_code
+ * @property-read string $trigger_name
+ */
 class Template extends BaseModel implements Auditable
 {
     use BlameableTrait;
@@ -83,9 +87,9 @@ class Template extends BaseModel implements Auditable
         return $links;
     }
 
-    public function getTriggerNameAttribute()
+    public function getTriggerNameAttribute(): ?string
     {
-        $trigger = Bell::trigger()->find($this->trigger_code);
+        $trigger = Bell::trigger()->find($this->trigger_code, 'code');
 
         if ($trigger != null) {
             return $trigger['name'];
