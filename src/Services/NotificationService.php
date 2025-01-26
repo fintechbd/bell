@@ -2,24 +2,19 @@
 
 namespace Fintech\Bell\Services;
 
-
 use Fintech\Bell\Interfaces\NotificationRepository;
 
 /**
  * Class NotificationService
- * @package Fintech\Bell\Services
- *
  */
 class NotificationService
 {
     /**
      * NotificationService constructor.
-     * @param NotificationRepository $notificationRepository
      */
-    public function __construct(private readonly NotificationRepository $notificationRepository) { }
+    public function __construct(private readonly NotificationRepository $notificationRepository) {}
 
     /**
-     * @param array $filters
      * @return mixed
      */
     public function list(array $filters = [])

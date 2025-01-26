@@ -2,14 +2,14 @@
 
 namespace Fintech\Bell\Models;
 
-use Fintech\Core\Traits\AuditableTrait;
 use Fintech\Core\Abstracts\BaseModel;
+use Fintech\Core\Traits\AuditableTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Notification extends BaseModel
 {
-   use AuditableTrait;
-   use SoftDeletes;
+    use AuditableTrait;
+    use SoftDeletes;
 
     /*
     |--------------------------------------------------------------------------
@@ -20,8 +20,6 @@ class Notification extends BaseModel
     protected $primaryKey = 'id';
 
     protected $guarded = ['id'];
-
-
 
     protected $casts = ['notification_data' => 'array', 'restored_at' => 'datetime', 'enabled' => 'bool'];
 
