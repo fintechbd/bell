@@ -2,7 +2,6 @@
 
 namespace Fintech\Bell\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Exception;
 use Fintech\Bell\Facades\Bell;
 use Fintech\Bell\Http\Resources\TriggerCollection;
@@ -10,6 +9,7 @@ use Fintech\Bell\Http\Resources\TriggerResource;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 
 class TriggerController extends Controller
 {
