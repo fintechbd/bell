@@ -12,7 +12,7 @@ return [
     |--------------------------------------------------------------------------
     | this setting enable the api will be available or not
     */
-    'enabled' => env('PACKAGE_BELL_ENABLED', true),
+    'enabled' => env('BELL_ENABLED', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -44,11 +44,11 @@ return [
             'driver' => FirebasePush::class,
             'live' => [
                 'url' => 'https://fcm.googleapis.com/v1/projects/{project_id}/messages:send',
-                'json' => env('PACKAGE_BELL_FIREBASE_CREDENTIALS'),
+                'json' => env('BELL_FIREBASE_CREDENTIALS'),
             ],
             'sandbox' => [
                 'url' => 'https://fcm.googleapis.com/v1/projects/{project_id}/messages:send',
-                'json' => env('PACKAGE_BELL_FIREBASE_CREDENTIALS'),
+                'json' => env('BELL_FIREBASE_CREDENTIALS'),
             ],
         ],
         'web' => [
