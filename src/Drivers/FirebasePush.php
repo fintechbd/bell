@@ -10,9 +10,6 @@ use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 use InvalidArgumentException;
-use Laraflow\Sms\SmsMessage;
-use Psr\Http\Message\MessageInterface;
-use Psr\Http\Message\StreamInterface;
 
 class FirebasePush extends PushDriver
 {
