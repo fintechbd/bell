@@ -22,7 +22,7 @@ class TemplateSeeder extends Seeder
         return [
             [
 
-            ]
+            ],
         ];
     }
 }
