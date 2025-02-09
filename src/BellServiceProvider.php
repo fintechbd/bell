@@ -39,7 +39,7 @@ class BellServiceProvider extends ServiceProvider
 
         $this->publishes([
             __DIR__.'/../config/bell.php' => config_path('fintech/bell.php'),
-        ]);
+        ], 'fintech-bell-config');
 
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 
@@ -47,7 +47,7 @@ class BellServiceProvider extends ServiceProvider
 
         $this->publishes([
             __DIR__.'/../lang' => $this->app->langPath('vendor/bell'),
-        ]);
+        ], 'fintech-bell-lang');
 
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'bell');
 
@@ -55,7 +55,7 @@ class BellServiceProvider extends ServiceProvider
 
         $this->publishes([
             __DIR__.'/../resources/views' => resource_path('views/vendor/bell'),
-        ]);
+        ], 'fintech-bell-views');
 
         if ($this->app->runningInConsole()) {
             $this->commands([
