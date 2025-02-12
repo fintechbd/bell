@@ -4,6 +4,7 @@ namespace Fintech\Bell;
 
 use Fintech\Bell\Channels\PushChannel;
 use Fintech\Bell\Commands\InstallCommand;
+use Fintech\Bell\Providers\EventServiceProvider;
 use Fintech\Bell\Providers\RepositoryServiceProvider;
 use Fintech\Core\Traits\Packages\RegisterPackageTrait;
 use Illuminate\Support\Facades\Notification;
@@ -27,6 +28,7 @@ class BellServiceProvider extends ServiceProvider
         );
 
         $this->app->register(RepositoryServiceProvider::class);
+        $this->app->register(EventServiceProvider::class);
 
     }
 

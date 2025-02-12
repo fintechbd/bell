@@ -38,6 +38,13 @@ class Template extends BaseModel implements Auditable
         'medium' => NotificationMedium::class,
     ];
 
+    protected $attributes = [
+        'template_data' => [
+            'scheduled' => false,
+            'triggered' => false,
+        ],
+    ];
+
     protected $hidden = ['creator_id', 'editor_id', 'destroyer_id', 'restorer_id'];
 
     /*
