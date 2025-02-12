@@ -28,7 +28,6 @@ class ScheduledTrigger extends BaseEvent
 
     /**
      * List all the aliases that this event will provide
-     * @return array
      */
     public function aliases(): array
     {

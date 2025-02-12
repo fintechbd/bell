@@ -15,7 +15,7 @@ class EventServiceProvider extends ServiceProvider
      */
     protected $listen = [
         ScheduledTrigger::class => [
-            TriggerListener::class
+            TriggerListener::class,
         ],
     ];
 }
