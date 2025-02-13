@@ -37,7 +37,7 @@ class StoreTemplateRequest extends FormRequest
             'recipients.extra.*' => ['nullable', 'string'],
             'template_data.scheduled' => ['nullable', 'boolean'],
             'template_data.triggered' => ['nullable', 'boolean'],
-            'template_data.trigger_at' => ['nullable', 'date', 'date_format:Y-m-d H:i:0', 'date_after:now'],
+            'template_data.trigger_at' => ['nullable', 'date', 'date_format:Y-m-d H:i:00', 'after:now'],
         ];
 
         if ($this->input('medium') == 'sms') {
