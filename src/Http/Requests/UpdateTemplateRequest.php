@@ -37,7 +37,7 @@ class UpdateTemplateRequest extends FormRequest
             'recipients.extra.*' => ['nullable', 'string'],
             'template_data.scheduled' => ['nullable', 'boolean'],
             'template_data.triggered' => ['nullable', 'boolean'],
-            'template_data.trigger_at' => ['nullable', 'datetime'],
+            'template_data.trigger_at' => ['nullable', 'date', 'date_format:Y-m-d H:i:0', 'date_after:now'],
         ];
 
         if ($this->input('medium') == 'sms') {
