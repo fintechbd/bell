@@ -2,7 +2,9 @@
 
 namespace Fintech\Bell\Services;
 
+use Fintech\Bell\Handlers\TriggerNotificationHandler;
 use Fintech\Bell\Interfaces\NotificationRepository;
+use Fintech\Bell\Notifications\DynamicNotification;
 
 /**
  * Class NotificationService
@@ -56,5 +58,10 @@ class NotificationService
     public function import(array $filters)
     {
         return $this->notificationRepository->create($filters);
+    }
+
+    public function handle(object $event, array $variables): void
+    {
+        (new TriggerNotificationHandler)->handle($event, $variables);
     }
 }
