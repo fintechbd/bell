@@ -10,8 +10,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Notification;
 
-class TriggerNotificationHandler {
-
+class TriggerNotificationHandler
+{
     public function handle(object $event, array $variables): void
     {
         foreach ($event->templates() as $template) {

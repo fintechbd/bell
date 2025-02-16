@@ -4,7 +4,6 @@ namespace Fintech\Bell\Services;
 
 use Fintech\Bell\Handlers\TriggerNotificationHandler;
 use Fintech\Bell\Interfaces\NotificationRepository;
-use Fintech\Bell\Notifications\DynamicNotification;
 
 /**
  * Class NotificationService
