@@ -13,9 +13,7 @@ class DynamicNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    public function __construct(public string $channel, public array $content, public array $replacements = [])
-    {
-    }
+    public function __construct(public string $channel, public array $content, public array $replacements = []) {}
 
     public function via(?object $notifiable = null): array
     {
