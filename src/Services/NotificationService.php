@@ -13,9 +13,7 @@ class NotificationService
     /**
      * NotificationService constructor.
      */
-    public function __construct(private readonly NotificationRepository $notificationRepository)
-    {
-    }
+    public function __construct(private readonly NotificationRepository $notificationRepository) {}
 
     /**
      * @return mixed
