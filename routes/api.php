@@ -35,7 +35,7 @@ if (Config::get('fintech.bell.enabled')) {
                     ->name('templates.restore');
 
                 Route::apiResource('notifications', NotificationController::class)
-                    ->only(['index', 'show', 'destroy']);
+                    ->only(['index', 'show', 'destroy', 'update']);
                 // DO NOT REMOVE THIS LINE//
             });
     });

@@ -6,12 +6,15 @@ use Exception;
 use Fintech\Bell\Facades\Bell;
 use Fintech\Bell\Http\Requests\ImportNotificationRequest;
 use Fintech\Bell\Http\Requests\IndexNotificationRequest;
+use Fintech\Bell\Http\Requests\UpdateTemplateRequest;
 use Fintech\Bell\Http\Resources\NotificationCollection;
 use Fintech\Bell\Http\Resources\NotificationResource;
 use Fintech\Core\Exceptions\DeleteOperationException;
 use Fintech\Core\Exceptions\RestoreOperationException;
+use Fintech\Core\Exceptions\UpdateOperationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
 /**
@@ -71,6 +74,44 @@ class NotificationController extends Controller
             }
 
             return new NotificationResource($notification);
+
+        } catch (ModelNotFoundException $exception) {
+
+            return response()->notfound($exception->getMessage());
+
+        } catch (Exception $exception) {
+
+            return response()->failed($exception);
+        }
+    }
+
+    /**
+     * @lrd:start
+     * Update a specified *TemplateController* resource using id.
+     *
+     * @lrd:end
+     *
+     * @throws ModelNotFoundException
+     * @throws UpdateOperationException
+     */
+    public function update(Request $request, string|int $id): JsonResponse
+    {
+        try {
+
+            $template = Bell::notification()->find($id);
+
+            if (! $template) {
+                throw (new ModelNotFoundException)->setModel(config('fintech.bell.notification_model'), $id);
+            }
+
+            $inputs = $request->validated();
+
+            if (! Bell::notification()->update($id, $inputs)) {
+
+                throw (new UpdateOperationException)->setModel(config('fintech.bell.notification_model'), $id);
+            }
+
+            return response()->updated(__('core::messages.resource.updated', ['model' => 'Notification']));
 
         } catch (ModelNotFoundException $exception) {
 

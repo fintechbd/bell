@@ -28,7 +28,7 @@ class NotificationRepository extends EloquentRepository implements InterfacesNot
         $query = $this->model->newQuery();
 
         // Searching
-        if (! empty($filters['search'])) {
+        if (!empty($filters['search'])) {
             if (is_numeric($filters['search'])) {
                 $query->where($this->model->getKeyName(), 'like', "%{$filters['search']}%");
             } else {
@@ -37,15 +37,19 @@ class NotificationRepository extends EloquentRepository implements InterfacesNot
             }
         }
 
-        if (! empty($filters['notifiable_type'])) {
+        if (!empty($filters['notifiable_type'])) {
             $query->where('notifiable_type', '=', $filters['notifiable_type']);
         }
 
-        if (! empty($filters['type'])) {
+        if (!empty($filters['type'])) {
             $query->where('type', '=', $filters['type']);
         }
 
-        if (! empty($filters['user_id'])) {
+        if (isset($filters['unread']) && $filters['unread'] == true) {
+            $query->whereNull('read_at');
+        }
+
+        if (!empty($filters['user_id'])) {
             $query->where('notifiable_id', '=', $filters['user_id']);
         }
 
