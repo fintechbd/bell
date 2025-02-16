@@ -58,4 +58,14 @@ class DynamicNotification extends Notification implements ShouldQueue
             'timestamp' => now(),
         ];
     }
+
+    public function toDatabase(?object $notifiable = null): array
+    {
+        return [
+            'type' => $this->content['type'] ?? 'info',
+            'title' => strtr($this->content['title'] ?? 'Notification Title', $this->replacements),
+            'body' => strtr($this->content['body'] ?? 'Notification body', $this->replacements),
+            'timestamp' => now(),
+        ];
+    }
 }
