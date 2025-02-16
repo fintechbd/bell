@@ -4,6 +4,7 @@ namespace Fintech\Bell;
 
 use Fintech\Bell\Channels\PushChannel;
 use Fintech\Bell\Commands\InstallCommand;
+use Fintech\Bell\Commands\ScheduledNotificationCommand;
 use Fintech\Bell\Providers\EventServiceProvider;
 use Fintech\Bell\Providers\RepositoryServiceProvider;
 use Fintech\Core\Traits\Packages\RegisterPackageTrait;
@@ -62,6 +63,7 @@ class BellServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands([
                 InstallCommand::class,
+                ScheduledNotificationCommand::class
             ]);
         }
 
