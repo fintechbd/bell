@@ -14,11 +14,13 @@ class DynamicNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    public function __construct(public NotificationMedium $channel, public array $content, public array $replacements = []) {}
+    public function __construct(public string $channel, public array $content, public array $replacements = []) {}
 
     public function via(?object $notifiable = null): array
     {
-        return [$this->channel->value];
+        logger()->debug('DynamicNotification:via() Called');
+
+        return [$this->channel];
     }
 
     public function toMail(?object $notifiable = null): MailMessage
@@ -37,7 +39,7 @@ class DynamicNotification extends Notification implements ShouldQueue
     public function toSms(?object $notifiable = null): SmsMessage
     {
         return (new SmsMessage)
-            ->from(decide_sms_from_name($notifiable->routeNotificationFor($this->channel->value)))
+            ->from(decide_sms_from_name($notifiable->routeNotificationFor($this->channel)))
             ->message(strtr($this->content['body'] ?? 'SMS Body', $this->replacements));
     }
 
@@ -51,6 +53,8 @@ class DynamicNotification extends Notification implements ShouldQueue
 
     public function toArray(?object $notifiable = null): array
     {
+        logger()->debug('DynamicNotification:toArray() Called');
+
         return [
             'type' => $this->content['type'] ?? 'info',
             'title' => strtr($this->content['title'] ?? 'Notification Title', $this->replacements),
@@ -61,6 +65,7 @@ class DynamicNotification extends Notification implements ShouldQueue
 
     public function toDatabase(?object $notifiable = null): array
     {
+        logger()->debug('DynamicNotification:toDatabase() Called');
         return [
             'type' => $this->content['type'] ?? 'info',
             'title' => strtr($this->content['title'] ?? 'Notification Title', $this->replacements),

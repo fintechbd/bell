@@ -13,7 +13,9 @@ class NotificationService
     /**
      * NotificationService constructor.
      */
-    public function __construct(private readonly NotificationRepository $notificationRepository) {}
+    public function __construct(private readonly NotificationRepository $notificationRepository)
+    {
+    }
 
     /**
      * @return mixed
@@ -61,6 +63,7 @@ class NotificationService
 
     public function handle(object $event, array $variables): void
     {
+        logger()->debug('NotificationService Called');
         (new TriggerNotificationHandler)->handle($event, $variables);
     }
 }
