@@ -13,12 +13,12 @@ class DynamicNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    public function __construct(public string $channel, public array $content, public array $replacements = []) {}
+    public function __construct(public string $channel, public array $content, public array $replacements = [])
+    {
+    }
 
     public function via(?object $notifiable = null): array
     {
-        logger()->debug('DynamicNotification:via() Called');
-
         return [$this->channel];
     }
 
@@ -50,22 +50,8 @@ class DynamicNotification extends Notification implements ShouldQueue
             ->body(strtr($this->content['body'] ?? 'Push body', $this->replacements));
     }
 
-    public function toArray(?object $notifiable = null): array
-    {
-        logger()->debug('DynamicNotification:toArray() Called');
-
-        return [
-            'type' => $this->content['type'] ?? 'info',
-            'title' => strtr($this->content['title'] ?? 'Notification Title', $this->replacements),
-            'body' => strtr($this->content['body'] ?? 'Notification body', $this->replacements),
-            'timestamp' => now(),
-        ];
-    }
-
     public function toDatabase(?object $notifiable = null): array
     {
-        logger()->debug('DynamicNotification:toDatabase() Called');
-
         return [
             'type' => $this->content['type'] ?? 'info',
             'title' => strtr($this->content['title'] ?? 'Notification Title', $this->replacements),

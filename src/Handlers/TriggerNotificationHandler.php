@@ -14,10 +14,6 @@ class TriggerNotificationHandler
 {
     public function handle($event, array $variables): void
     {
-        logger()->debug('TriggerNotificationHandler Called');
-
-        logger()->debug('Event', [get_class($event)]);
-
         foreach ($event->templates() as $template) {
             Notification::send($this->recipients($event, $template), new DynamicNotification($template->medium->value, $template->content, $variables));
         }

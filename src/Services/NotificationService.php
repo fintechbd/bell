@@ -61,7 +61,6 @@ class NotificationService
 
     public function handle(object $event, array $variables): void
     {
-        logger()->debug('NotificationService Called');
         (new TriggerNotificationHandler)->handle($event, $variables);
     }
 }
