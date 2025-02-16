@@ -32,7 +32,7 @@ class IndexNotificationRequest extends FormRequest
             'sort' => ['string', 'nullable', 'min:2', 'max:255'],
             'dir' => ['string', 'min:3', 'max:4'],
             'trashed' => ['boolean', 'nullable'],
-            'unread' => ['boolean', 'nullable'],
+            'unread' => ['string', 'nullable', 'in:true,false'],
             'user_id' => ['integer', 'nullable', 'min:1'],
         ];
     }

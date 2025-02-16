@@ -41,6 +41,10 @@ class NotificationController extends Controller
         try {
             $inputs = $request->validated();
 
+            if ($request->filled('unread')) {
+                $inputs['unread'] = $request->boolean('unread');
+            }
+
             $inputs['notifiable_type'] = config('fintech.auth.user_model', \Fintech\Auth\Models\User::class);
             $inputs['user_id'] = $inputs['user_id'] ?? $request->user('sanctum')->getKey();
             $inputs['type'] = $inputs['type'] ?? \Fintech\Bell\Notifications\DynamicNotification::class;
