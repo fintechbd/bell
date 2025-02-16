@@ -6,7 +6,6 @@ use Exception;
 use Fintech\Bell\Facades\Bell;
 use Fintech\Bell\Http\Requests\ImportNotificationRequest;
 use Fintech\Bell\Http\Requests\IndexNotificationRequest;
-use Fintech\Bell\Http\Requests\UpdateTemplateRequest;
 use Fintech\Bell\Http\Resources\NotificationCollection;
 use Fintech\Bell\Http\Resources\NotificationResource;
 use Fintech\Core\Exceptions\DeleteOperationException;
