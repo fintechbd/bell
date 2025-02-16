@@ -3,7 +3,6 @@
 namespace Fintech\Bell\Commands;
 
 use Fintech\Bell\Events\ScheduledTrigger;
-use Fintech\Core\Facades\Core;
 use Illuminate\Console\Command;
 
 class ScheduledNotificationCommand extends Command
@@ -27,12 +26,12 @@ class ScheduledNotificationCommand extends Command
      */
     public function handle()
     {
-//        \Fintech\Bell\Facades\Bell::template()->list([
-//            'trigger_code' => \Fintech\Bell\Events\ScheduledTrigger::class,
-//            'triggered' => false,
-//            'scheduled' => true,
-//        ])->each(function ($trigger) {
-//            event(new ScheduledTrigger($trigger));
-//        });
+        //        \Fintech\Bell\Facades\Bell::template()->list([
+        //            'trigger_code' => \Fintech\Bell\Events\ScheduledTrigger::class,
+        //            'triggered' => false,
+        //            'scheduled' => true,
+        //        ])->each(function ($trigger) {
+        //            event(new ScheduledTrigger($trigger));
+        //        });
     }
 }
