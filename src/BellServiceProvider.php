@@ -63,7 +63,7 @@ class BellServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands([
                 InstallCommand::class,
-                ScheduledNotificationCommand::class
+                ScheduledNotificationCommand::class,
             ]);
         }
 
