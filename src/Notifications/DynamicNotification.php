@@ -3,7 +3,6 @@
 namespace Fintech\Bell\Notifications;
 
 use Fintech\Bell\Messages\PushMessage;
-use Fintech\Core\Enums\Bell\NotificationMedium;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -66,6 +65,7 @@ class DynamicNotification extends Notification implements ShouldQueue
     public function toDatabase(?object $notifiable = null): array
     {
         logger()->debug('DynamicNotification:toDatabase() Called');
+
         return [
             'type' => $this->content['type'] ?? 'info',
             'title' => strtr($this->content['title'] ?? 'Notification Title', $this->replacements),
