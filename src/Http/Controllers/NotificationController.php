@@ -97,7 +97,7 @@ class NotificationController extends Controller
      * @throws ModelNotFoundException
      * @throws UpdateOperationException
      */
-    public function update(Request $request, string|int $id): JsonResponse
+    public function update(string|int $id): JsonResponse
     {
         try {
 
@@ -107,9 +107,7 @@ class NotificationController extends Controller
                 throw (new ModelNotFoundException)->setModel(config('fintech.bell.notification_model'), $id);
             }
 
-            $inputs = $request->validated();
-
-            if (! Bell::notification()->update($id, $inputs)) {
+            if (! Bell::notification()->update($id, ['read_at' => now()])) {
 
                 throw (new UpdateOperationException)->setModel(config('fintech.bell.notification_model'), $id);
             }
@@ -164,85 +162,4 @@ class NotificationController extends Controller
         }
     }
 
-    /**
-     * @lrd:start
-     * Restore the specified *Notification* resource from trash.
-     * ** ```Soft Delete``` needs to enabled to use this feature**
-     *
-     * @lrd:end
-     *
-     * @return JsonResponse
-     */
-    public function restore(string|int $id)
-    {
-        try {
-
-            $notification = Bell::notification()->find($id, true);
-
-            if (! $notification) {
-                throw (new ModelNotFoundException)->setModel(config('fintech.bell.notification_controller_model'), $id);
-            }
-
-            if (! Bell::notification()->restore($id)) {
-
-                throw (new RestoreOperationException)->setModel(config('fintech.bell.notification_controller_model'), $id);
-            }
-
-            return response()->restored(__('core::messages.resource.restored', ['model' => 'Notification Controller']));
-
-        } catch (ModelNotFoundException $exception) {
-
-            return response()->notfound($exception->getMessage());
-
-        } catch (Exception $exception) {
-
-            return response()->failed($exception);
-        }
-    }
-
-    /**
-     * @lrd:start
-     * Create a exportable list of the *Notification* resource as document.
-     * After export job is done system will fire  export completed event
-     *
-     * @lrd:end
-     */
-    public function export(IndexNotificationRequest $request): JsonResponse
-    {
-        try {
-            $inputs = $request->validated();
-
-            $notificationPaginate = Bell::notification()->export($inputs);
-
-            return response()->exported(__('core::messages.resource.exported', ['model' => 'Notification Controller']));
-
-        } catch (Exception $exception) {
-
-            return response()->failed($exception);
-        }
-    }
-
-    /**
-     * @lrd:start
-     * Create a exportable list of the *Notification* resource as document.
-     * After export job is done system will fire  export completed event
-     *
-     * @lrd:end
-     *
-     * @return NotificationCollection|JsonResponse
-     */
-    public function import(ImportNotificationRequest $request): JsonResponse
-    {
-        try {
-            $inputs = $request->validated();
-
-            $notificationPaginate = Bell::notification()->list($inputs);
-
-            return new NotificationCollection($notificationPaginate);
-
-        } catch (Exception $exception) {
-
-            return response()->failed($exception);
-        }
-    }
 }
