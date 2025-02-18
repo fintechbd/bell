@@ -38,9 +38,9 @@ return [
     | Note: while adding prefix add closing ending slash '/'
     */
     'push' => [
-        'mode' => 'sandbox',
         'default' => 'fcm',
         'fcm' => [
+            'mode' => 'sandbox',
             'driver' => FirebasePush::class,
             'live' => [
                 'url' => 'https://fcm.googleapis.com/v1/projects/{project_id}/messages:send',
@@ -52,6 +52,7 @@ return [
             ],
         ],
         'web' => [
+            'mode' => 'sandbox',
             'driver' => WebPush::class,
             'live' => [
                 'url' => 'https://mmk314.api.infobip.com/sms/2/text/advanced',
