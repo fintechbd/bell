@@ -56,11 +56,7 @@ class TriggerController extends Controller
 
             return new TriggerResource($trigger);
 
-        } catch (ModelNotFoundException $exception) {
-
-            return response()->notfound($exception->getMessage());
-
-        } catch (Exception $exception) {
+        }  catch (Exception $exception) {
 
             return response()->failed($exception);
         }
