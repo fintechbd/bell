@@ -2,7 +2,6 @@
 
 namespace Fintech\Bell\Commands;
 
-use Fintech\Bell\Events\ScheduledTrigger;
 use Illuminate\Console\Command;
 
 class ScheduledNotificationCommand extends Command
