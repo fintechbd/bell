@@ -56,7 +56,7 @@ class TriggerController extends Controller
 
             return new TriggerResource($trigger);
 
-        }  catch (Exception $exception) {
+        } catch (Exception $exception) {
 
             return response()->failed($exception);
         }

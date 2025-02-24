@@ -75,7 +75,7 @@ class NotificationController extends Controller
 
             return new NotificationResource($notification);
 
-        }  catch (Exception $exception) {
+        } catch (Exception $exception) {
 
             return response()->failed($exception);
         }
@@ -107,7 +107,7 @@ class NotificationController extends Controller
 
             return response()->updated(__('core::messages.resource.updated', ['model' => 'Notification']));
 
-        }  catch (Exception $exception) {
+        } catch (Exception $exception) {
 
             return response()->failed($exception);
         }
@@ -141,7 +141,7 @@ class NotificationController extends Controller
 
             return response()->deleted(__('core::messages.resource.deleted', ['model' => 'Notification Controller']));
 
-        }  catch (Exception $exception) {
+        } catch (Exception $exception) {
 
             return response()->failed($exception);
         }
