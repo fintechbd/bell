@@ -35,7 +35,7 @@ class TriggerService
 
     public function list(array $filters = [])
     {
-        if (!empty($filters['search'])) {
+        if (! empty($filters['search'])) {
             $this->triggers = $this->triggers->filter(function ($item) use ($filters) {
                 return Str::contains($item['name'], $filters['search'], true)
                     || Str::contains($item['description'], $filters['search'], true);
