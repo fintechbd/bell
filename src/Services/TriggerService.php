@@ -89,6 +89,7 @@ class TriggerService
                     'id' => Str::uuid()->toString(),
                     'name' => $triggerInfo->name(),
                     'code' => $event,
+                    'anonymous' => $triggerInfo->isAnonymous(),
                     'description' => $triggerInfo->description(),
                     'enabled' => $triggerInfo->enabled(),
                     'variables' => array_map(fn ($variable) => ['name' => $variable->name(), 'description' => $variable->description()], $triggerInfo->variables()),
