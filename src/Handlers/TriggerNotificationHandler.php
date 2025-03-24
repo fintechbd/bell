@@ -30,8 +30,8 @@ class TriggerNotificationHandler
 
     private function eventUser($event): null|Authenticatable|BaseModel
     {
-        if (property_exists($event, 'user')) {
-            return $event->user;
+        if (method_exists($event, 'user')) {
+            return $event->user();
         }
 
         return null;
