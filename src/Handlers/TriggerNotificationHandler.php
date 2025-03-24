@@ -9,6 +9,7 @@ use Fintech\Core\Facades\Core;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Notifications\AnonymousNotifiable;
 
 class TriggerNotificationHandler
 {
@@ -19,7 +20,7 @@ class TriggerNotificationHandler
         }
     }
 
-    private function systemAdmin(): null|Authenticatable|BaseModel
+    private function systemAdmin(): mixed
     {
         if (Core::packageExists('Auth')) {
             return \Fintech\Auth\Facades\Auth::user()->findWhere(['id' => 1]);
@@ -28,7 +29,7 @@ class TriggerNotificationHandler
         return null;
     }
 
-    private function eventUser($event): null|Authenticatable|BaseModel
+    private function eventUser($event): mixed
     {
         if (method_exists($event, 'user')) {
             return $event->user();
@@ -37,7 +38,7 @@ class TriggerNotificationHandler
         return null;
     }
 
-    private function eventAgent($event): null|Authenticatable|BaseModel
+    private function eventAgent($event): mixed
     {
         if (property_exists($event, 'agent')) {
             return $event->agent;
