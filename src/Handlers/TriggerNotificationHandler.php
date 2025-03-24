@@ -3,13 +3,10 @@
 namespace Fintech\Bell\Handlers;
 
 use Fintech\Bell\Notifications\DynamicNotification;
-use Fintech\Core\Abstracts\BaseModel;
 use Fintech\Core\Enums\Bell\NotificationMedium;
 use Fintech\Core\Facades\Core;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Notification;
-use Illuminate\Notifications\AnonymousNotifiable;
 
 class TriggerNotificationHandler
 {
