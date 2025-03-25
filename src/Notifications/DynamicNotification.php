@@ -38,9 +38,7 @@ class DynamicNotification extends Notification implements ShouldQueue
         return $notifiable->routeNotificationFor($channel, $this) != null;
     }
 
-    public function __construct(public string $channel, public array $content, public array $replacements = [])
-    {
-    }
+    public function __construct(public string $channel, public array $content, public array $replacements = []) {}
 
     /**
      * Get the notification's delivery channels.
