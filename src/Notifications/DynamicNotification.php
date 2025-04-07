@@ -20,9 +20,13 @@ class DynamicNotification extends Notification implements ShouldQueue
      */
     public function shouldSend(object $notifiable, string $channel): bool
     {
+        logger("Notifiable: " . get_class($notifiable));
+
         if ($notifiable instanceof AnonymousNotifiable) {
 
             $channelValue = $notifiable->routeNotificationFor($channel, $this);
+
+            logger("Anonymous Channel: " . $channel . " Value: " . $channelValue);
 
             if (empty($channelValue)) {
                 return false;
