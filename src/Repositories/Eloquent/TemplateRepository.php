@@ -46,7 +46,7 @@ class TemplateRepository extends EloquentRepository implements InterfacesTemplat
             $query->where('enabled', $filters['enabled']);
         }
         if (isset($filters['medium_in'])) {
-            $query->whereIn('medium', (array)$filters['medium_in']);
+            $query->whereIn('medium', (array) $filters['medium_in']);
         }
 
         if (isset($filters['triggered'])) {
