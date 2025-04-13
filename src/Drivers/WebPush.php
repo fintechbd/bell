@@ -4,7 +4,6 @@ namespace Fintech\Bell\Drivers;
 
 use Fintech\Bell\Abstracts\PushDriver;
 use Fintech\Bell\Messages\PushMessage;
-use Fintech\Bell\Messages\SmsMessage;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 
