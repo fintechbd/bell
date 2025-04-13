@@ -3,7 +3,9 @@
 namespace Fintech\Bell\Drivers;
 
 use Fintech\Bell\Abstracts\PushDriver;
+use Fintech\Bell\Messages\PushMessage;
 use Fintech\Bell\Messages\SmsMessage;
+use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 
 /**
@@ -24,7 +26,7 @@ class WebPush extends PushDriver
         ]);
     }
 
-    public function send(SmsMessage $message): void
+    public function send(PushMessage $message): Response
     {
         $this->validate($message);
 
@@ -41,5 +43,12 @@ class WebPush extends PushDriver
             ->post($this->config['url'], $payload)->json();
 
         logger('Web Push Response', [$response]);
+
+        return $response;
+    }
+
+    public function validate(PushMessage $message): void
+    {
+        // TODO: Implement validate() method.
     }
 }
