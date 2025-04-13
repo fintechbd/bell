@@ -54,8 +54,6 @@ class PushChannel
 
             $this->response = $this->driver->send($pushMessage);
 
-            logger("Push message sent to {$to}", [$this->response->json()]);
-
         } catch (Exception $exception) {
             (App::isProduction())
                 ? Log::error($exception)
